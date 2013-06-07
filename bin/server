@@ -3,6 +3,8 @@ var big = require('big');
 big.use('http');
 big.use('view');
 big.use('admin');
+var thing = big.use('thing');
+thing.persist('memory');
 
 big.view.create({ path: __dirname + '/../view' }, function(err, _view){
   big.http.start({

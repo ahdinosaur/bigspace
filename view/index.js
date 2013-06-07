@@ -6,7 +6,7 @@ module['exports'] = function(options, callback) {
   var $ = this.$;
 
   forms.generate({
-    resource: 'creature',
+    resource: 'thing',
     method: 'create'
   }, function(err, result) {
     if (err) { throw err; }
