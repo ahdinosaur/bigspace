@@ -1,0 +1,23 @@
+{
+  "name": "thingmaker",
+  "version": "0.0.0",
+  "description": "make a thing distributed",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahdinosaur/thingmaker.git"
+  },
+  "author": "ahdinosaur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ahdinosaur/thingmaker/issues"
+  },
+  "dependencies": {
+    "big": "~0.4.0",
+    "resource": "~0.4.0",
+    "resources": "~0.4.0"
+  }
+}
