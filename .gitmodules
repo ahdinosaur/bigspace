@@ -1,0 +1,3 @@
+[submodule "resources/thing"]
+	path = resources/thing
+	url = git://github.com/erobit/thing.git
