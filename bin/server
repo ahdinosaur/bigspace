@@ -8,7 +8,7 @@ thing.persist('memory');
 
 big.view.create({ path: __dirname + '/../view' }, function(err, _view){
   big.http.start({
-    root: __dirname + '/../view'
+    root: __dirname + '/../public'
     }, function(){
     big.http.app.use(big.view.middle({view: _view}));
     big.admin.start();
