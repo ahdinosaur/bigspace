@@ -1,3 +1,6 @@
 [submodule "resources/thing"]
 	path = resources/thing
 	url = git://github.com/erobit/thing.git
+[submodule "resources/user"]
+	path = resources/user
+	url = https://github.com/ahdinosaur/user.git

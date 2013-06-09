@@ -1,5 +1,4 @@
 var resource = require('resource'),
-    creature = resource.use('creature'),
     forms = resource.use('forms');
 
 module['exports'] = function(options, callback) {

@@ -1,16 +1,84 @@
-var big = require('big');
+#!/usr/bin/env node
+
+var big = require('big'),
+    passport = require('passport'),
+    BrowserIDStrategy = require('passport-browserid').Strategy;
 
 big.use('http');
 big.use('view');
 big.use('admin');
+var logger = big.logger;
+var user = big.use('user');
 var thing = big.use('thing');
 thing.persist('memory');
 
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.  However, since this example does not
+//   have a database of user records, the BrowserID verified email address
+//   is serialized and deserialized.
+passport.serializeUser(user.serialize);
+passport.deserializeUser(user.deserialize);
+
+
+// Use the BrowserIDStrategy within Passport.
+//   Strategies in passport require a `validate` function, which accept
+//   credentials (in this case, a BrowserID verified email address), and invoke
+//   a callback with a user object.
+passport.use(new BrowserIDStrategy({
+    audience: 'http://localhost:8888'
+  },
+  function(email, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+      user.find({email: email}, function(err, users) {
+        if (err) { throw err; }
+        if (users.length === 0) {
+          logger.info("email not found. creating new user");
+          user.create({email: email}, function(err, _user) {
+            logger.info("new user with id", _user.id, "created");
+            if (err) { throw err; }
+            done(null, _user);
+          });
+        } else if (users.length > 1) {
+          throw "multiple users with same email!";
+        } else {
+          logger.info("email found. returning user");
+          done(null, users[0]);
+        }
+      })
+    });
+  }
+));
+
 big.view.create({ path: __dirname + '/../view' }, function(err, _view){
+
   big.http.start({
     root: __dirname + '/../public'
     }, function(){
+
+//    big.http.app.use(passport.initialize());
+//    big.http.app.use(passport.session());
+
     big.http.app.use(big.view.middle({view: _view}));
+
+    // POST /auth/browserid
+    //   Use passport.authenticate() as route middleware to authenticate the
+    //   request.  BrowserID authentication will verify the assertion obtained from
+    //   the browser via the JavaScript API.
+    big.http.app.post('/auth/browserid', 
+      passport.authenticate('browserid', { failureRedirect: '/login' }),
+      function(req, res) {
+        res.redirect('/');
+      });
+
+    big.http.app.get('/logout', function(req, res){
+      req.logout();
+      res.redirect('/');
+    });
+
     big.admin.start();
   });
 });

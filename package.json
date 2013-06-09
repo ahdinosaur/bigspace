@@ -18,6 +18,8 @@
   "dependencies": {
     "big": "~0.4.0",
     "resource": "~0.4.0",
-    "resources": "~0.4.0"
+    "resources": "~0.4.0",
+    "passport": "~0.1.17",
+    "passport-browserid": "~0.1.4"
   }
 }
