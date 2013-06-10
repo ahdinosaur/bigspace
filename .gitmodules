@@ -4,3 +4,9 @@
 [submodule "resources/user"]
 	path = resources/user
 	url = https://github.com/ahdinosaur/user.git
+[submodule "resources/auth"]
+	path = resources/auth
+	url = git://github.com/ahdinosaur/auth.git
+[submodule "resources/auth-browserid"]
+	path = resources/auth-browserid
+	url = git://github.com/ahdinosaur/auth-browserid.git
