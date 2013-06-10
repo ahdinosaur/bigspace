@@ -7,7 +7,7 @@ module['exports'] = function(options, callback) {
   var user =  options.request.user;
 
   if (typeof user !== 'undefined') {
-    $('#header').html("<p>hi " + user.email + "</p>");
+    $('#header').html("<p>hi " + user.id + "</p>");
   } else {
     $('#header').html(fs.readFileSync(__dirname + '/login.html'));
   }
