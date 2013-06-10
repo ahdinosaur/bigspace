@@ -67,6 +67,8 @@ function listen (options, callback) {
   app.first = connectr.first;
   app.last = connectr.last;
 
+  http.connectr = connectr;
+
   connectr.use(connect.favicon(__dirname + '/favicon.png')).as('favicon');
 
   connectr.use(connect.logger('dev')).as('logger');
@@ -116,7 +118,7 @@ function listen (options, callback) {
   // use auth middleware
   //
   if (resource.auth) {
-    resource.auth.use(connectr, app);
+    resource.auth.start();
   }
 
   finish();
@@ -145,7 +147,8 @@ function listen (options, callback) {
     //
     http.app = app;
     http.server = server;
-    http.connectr = connectr;
+
+    resource.auth.routes();
   }
 }
 
