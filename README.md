@@ -5,7 +5,7 @@
 ```
 git clone https://github.com/ahdinosaur/thingmaker.git
 cd thingmaker
-git checkout master // or whatever branch you want
+git checkout master # or whatever branch you want
 npm install
 git submodule init
 git submodule update
