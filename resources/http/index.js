@@ -139,7 +139,8 @@ function listen (options, callback) {
     // connectr.use(connect.static(__dirname + '/public')).as("static");
 
     http.server = server = require('http').createServer(app).listen(options.port, options.host, function () {
-     callback(null, server);
+      resource.auth.routes();
+      callback(null, server);
     });
 
     //
@@ -147,8 +148,6 @@ function listen (options, callback) {
     //
     http.app = app;
     http.server = server;
-
-    resource.auth.routes();
   }
 }
 
