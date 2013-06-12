@@ -25,7 +25,7 @@ module['exports'] = function(options, callback) {
   // TODO make async
   space.all(function(err, spaces) {
     if (err) { throw err; }
-    var tmpl = "<div class='pure-u-1-10'><a href='' class='spaceID'></a></div>";
+    var tmpl = "<div class='pure-u-1-6'><a href='' class='spaceID'></a></div>";
 
     // add each space to the nav
     spaces.forEach(function(_space) {
@@ -75,13 +75,15 @@ module['exports'] = function(options, callback) {
       // in-spaces nav
       //
       // TODO make async
-      var tmpl = "<div class='pure-u-1-10'><a href='' class='spaceID'></a></div>";
+      var tmpl = "<div class='pure-u-1-6'><a href='' class='joinSpace'></a> <a href='' class='partSpace'></a></div>";
 
       // add each space to the nav
       _creature.spaces.forEach(function(spaceID) {
         $('#in-spaces').append(html.render({
-          'spaceID': spaceID,
-          'spaceID.href': 'space?id=' + spaceID
+          'joinSpace': spaceID,
+          'joinSpace.href': 'space?id=' + spaceID,
+          'partSpace': 'x',
+          'partSpace.href': 'space?id=' + spaceID + "&part=true"
         }, tmpl));
       });
       callback(null, _creature);

@@ -13,12 +13,13 @@ module['exports'] = function(options, callback) {
       creature = resource.use('creature');
 
   // is the creature parting?
-  if (options.data.part === true) {
+  if (options.data.part === 'true') {
     space.pop({
     'spaceID': spaceID,
     'resource': creature,
     'resourceID': creatureID
     }, function(err, result) {
+      if (err) { throw err; }
       // redirect to index
       options.response.redirect('index');
     });
@@ -30,6 +31,7 @@ module['exports'] = function(options, callback) {
     'resource': creature,
     'resourceID': creatureID
     }, function(err, result) {
+      if (err) { throw err; }
       // if we need to refresh space,
       // this happens if
       //   a) this is a new space

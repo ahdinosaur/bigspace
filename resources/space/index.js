@@ -222,7 +222,7 @@ function pop(options, callback) {
         // TODO don't assume every resource has a 'spaces' property
         // if resource doesn't have spaceID, pop it
         var index = resourceInst.spaces.indexOf(spaceID);
-        if (index !== -1) {
+        if (index === -1) {
           return callback(new Error("space " + spaceID + " not in resource"));
         } else {
           logger.info('popping space', spaceID, 'from', resourceClass.name, resourceID);
