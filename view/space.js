@@ -14,9 +14,10 @@ module['exports'] = function(options, callback) {
 
   // is the creature parting?
   if (options.data.part === true) {
-    creature.part({
-    'creatureID': creatureID,
-    'spaceID': spaceID
+    space.pop({
+    'spaceID': spaceID,
+    'resource': creature,
+    'resourceID': creatureID
     }, function(err, result) {
       // redirect to index
       options.response.redirect('index');
@@ -24,16 +25,18 @@ module['exports'] = function(options, callback) {
   }
   // the creature must be joining
   else {
-    creature.join({
-    'creatureID': creatureID,
-    'spaceID': spaceID
+    space.push({
+    'spaceID': spaceID,
+    'resource': creature,
+    'resourceID': creatureID
     }, function(err, result) {
       // if we need to refresh space,
       // this happens if
       //   a) this is a new space
-      //   b) creature just joined the space
-      if ((result.newSpace === true) || (result.newCreature === true)) {
+      //   b) creature is new to the space
+      if ((result.newSpace === true) || (result.newResource === true)) {
         // refresh space
+        // TODO find better way to refresh
         options.response.redirect('space?id=' + spaceID);
       }
       // view the space
