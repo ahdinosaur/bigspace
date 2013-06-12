@@ -1,12 +1,12 @@
 [submodule "resources/thing"]
 	path = resources/thing
-	url = git://github.com/erobit/thing.git
+	url = https://github.com/erobit/thing.git
 [submodule "resources/user"]
 	path = resources/user
 	url = https://github.com/ahdinosaur/user.git
 [submodule "resources/auth"]
 	path = resources/auth
-	url = git://github.com/ahdinosaur/auth.git
+	url = https://github.com/ahdinosaur/auth.git
 [submodule "resources/auth-browserid"]
 	path = resources/auth-browserid
-	url = git://github.com/ahdinosaur/auth-browserid.git
+	url = https://github.com/ahdinosaur/auth-browserid.git

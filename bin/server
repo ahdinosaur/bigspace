@@ -7,6 +7,7 @@ big.use('view');
 big.use('admin');
 big.use('auth');
 big.use('auth-browserid');
+big.use('creature');
 var logger = big.logger;
 var user = big.use('user');
 var thing = big.use('thing');
