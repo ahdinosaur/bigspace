@@ -1,4 +1,4 @@
-var resource = require('resource'),
+var resource  = require('resource'),
     path = require('path'),
     http = resource.define('http');
 
@@ -11,7 +11,7 @@ http.property("port", {
 
 http.property("host", {
   "type": "string",
-  "default": "0.0.0.0",
+  "default": "0.0.0.0", 
   "description": "the host interface to listen on"
 });
 
@@ -51,59 +51,47 @@ function listen (options, callback) {
   var server;
 
   var connect = require('connect'),
-      express = require('express'),
-      app = express();
+      express = require('express');
 
-  //
-  // connectr module is used to enable management of Connect middleware stack
-  //
-  var connectr = require('connectr')(app);
+  var app = express();
 
-  //
-  // map the connectr methods for middleware management
-  //
-  app.before = connectr.before;
-  app.after = connectr.after;
-  app.first = connectr.first;
-  app.last = connectr.last;
-
-  http.connectr = connectr;
-
-  connectr.use(connect.favicon(__dirname + '/favicon.png')).as('favicon');
-
-  connectr.use(connect.logger('dev')).as('logger');
-  connectr.use(connect.cookieParser()).as('cookieParser');
-  connectr.use(connect.session({ secret: 'my secret here' })).as('session');
+  app
+    .use(connect.favicon(__dirname + '/favicon.png'))
+    .use(connect.logger('dev'))
+    .use(connect.cookieParser())
+    .use(connect.session({ secret: 'my secret here' }));
 
   if(options.enableUploads === true) {
-    connectr
+    app
     .use(express.bodyParser({
       uploadDir: __dirname + '/uploads',
       keepExtensions: true
-    })).as('bodyParser');
+    }));
   }
 
-  connectr.use(mergeParams).as('mergeParams');
+  app
+  .use(mergeParams);
+
 
   //
   // Basic virtual host support
   //
-  if (resource.virtualhost) {
-    connectr.use(resource.virtualhost.middle).as('virtualhost');
+  if(resource.virtualhost) {
+    app.use(resource.virtualhost.middle);
   }
 
   //
   // API middleware
   //
-  if (resource.api) {
-    connectr.use(resource.api.middle).as('middle');
+  if(resource.api) {
+    app.use(resource.api.middle);
   }
 
   //
   // Explicitly use the app.router middleware here so that routes take
   // precedence over the view middleware
   //
-  connectr.use(app.router).as('router');
+  app.use(app.router);
 
   //
   // Use view middleware
@@ -114,33 +102,25 @@ function listen (options, callback) {
     // app.use(resource.view.middle());
   }
 
-  //
-  // use auth middleware
-  //
-  if (resource.auth) {
-    resource.auth.start();
-  }
-
   finish();
 
   function finish() {
-
-    if (typeof options.root !== 'undefined') {
+    if(typeof options.root !== 'undefined') {
       //
       // Use http root passed in through options
       //
-      connectr
-        .use(connect.static(options.root)).as("static");;
+      app
+        .use(connect.static(options.root));
     }
 
     //
     // Use the default http root that ships with resources
     //
-    // connectr.use(connect.static(__dirname + '/public')).as("static");
+    app
+      .use(connect.static(__dirname + '/public'));
 
     http.server = server = require('http').createServer(app).listen(options.port, options.host, function () {
-      resource.auth.routes();
-      callback(null, server);
+     callback(null, server);
     });
 
     //
@@ -246,18 +226,18 @@ http.method('request', request, {
         },
         // TODO: admin view needs to support booleans
         /*
-"followRedirect": {
-"description": "follow redirects",
-"type": "boolean",
-"required": false,
-"default": true
-},
-"followAllRedirects": {
-"description": "follow non-GET redirects",
-"type": "boolean",
-"required": false,
-"default": false
-},*/
+        "followRedirect": {
+          "description": "follow redirects",
+          "type": "boolean",
+          "required": false,
+          "default": true
+        },
+        "followAllRedirects": {
+          "description": "follow non-GET redirects",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },*/
         "maxRedirects": {
           "description": "maximum number of redirects to follow",
           "type": "number",
@@ -274,18 +254,18 @@ http.method('request', request, {
           "type": "number",
           "required": false
         }/*,
-"strictSSL": {
-"description": "require that SSL certificates be valid",
-"type": "boolean",
-"required": false,
-"default": false
-},
-"jar": {
-"description": "remember cookie information",
-"type": "boolean",
-"required": false,
-"default": true
-}*/
+        "strictSSL": {
+          "description": "require that SSL certificates be valid",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        "jar": {
+          "description": "remember cookie information",
+          "type": "boolean",
+          "required": false,
+          "default": true
+        }*/
         // TODO: pool
         // TODO: proxy
         // TODO: oauth
@@ -303,8 +283,7 @@ function request (options, callback) {
 http.dependencies = {
   "connect": "2.7.1",
   "express": "3.0.4",
-  "request": "2.12.0",
-  "connectr": "0.0.3"
+  "request": "2.12.0"
 };
 
 exports.http = http;

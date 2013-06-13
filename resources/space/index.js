@@ -8,10 +8,25 @@ space.schema.description = 'spaces provide a place to put/group resources';
 space.persist('memory');
 
 function start() {
+  // .view() convention
   var view = resource.use('view');
   view.create({ path: __dirname + '/view' }, function(err, _view) {
       space.view = _view;
   });
+
+  // lazily define spaces property of resources
+  // TODO figure out where resources array comes from
+  var resources = ['creature'];
+  for (var i = 0; i < resources.length; i++) {
+    resource[resources[i]].property('spaces', {
+      description: "spaces resource is in",
+      type: 'array',
+      default: [],
+      items: {
+        type: 'string'
+      }
+    });
+  }
 }
 space.method('start', start, {
   description: "starts space"
@@ -47,6 +62,7 @@ function push(options, callback) {
   if (typeof resourceClass === 'string') {
     resourceClass = resource.use(resourceClass);
   }
+
 
   async.waterfall([
     // get space, create if not already exists

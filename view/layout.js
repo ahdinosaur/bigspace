@@ -86,14 +86,16 @@ module['exports'] = function(options, callback) {
       var tmpl = "<div class='pure-u-1-6'><a href='' class='joinSpace'></a> <a href='' class='partSpace'></a></div>";
 
       // add each space to the nav
-      _creature.spaces.forEach(function(spaceID) {
-        $('#in-spaces').append(html.render({
-          'joinSpace': spaceID,
-          'joinSpace.href': 'space?id=' + spaceID,
-          'partSpace': 'x',
-          'partSpace.href': 'space?id=' + spaceID + "&part=true"
-        }, tmpl));
-      });
+      if (typeof _creature.spaces !== 'undefined') {
+        _creature.spaces.forEach(function(spaceID) {
+          $('#in-spaces').append(html.render({
+            'joinSpace': spaceID,
+            'joinSpace.href': 'space?id=' + spaceID,
+            'partSpace': 'x',
+            'partSpace.href': 'space?id=' + spaceID + "&part=true"
+          }, tmpl));
+        });
+      }
       callback(null, _creature);
     }],
     function (err) {
