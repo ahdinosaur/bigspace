@@ -12,12 +12,14 @@ module['exports'] = function(options, callback) {
   //
   // auth nav
   //
+  /*
   var user =  options.request.user;
   if (typeof user !== 'undefined') {
     $('#header').html("<p>hi " + user.id + "</p>");
   } else {
     $('#header').html(fs.readFileSync(__dirname + '/login.html'));
   }
+  */
 
   //
   // all-spaces nav

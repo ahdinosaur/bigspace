@@ -2,27 +2,31 @@
 
 var big = require('big');
 
-big.use('http');
-big.use('view');
+big.use('un');
 big.use('admin');
 big.use('auth');
 big.use('auth-browserid');
-var creature = big.use('creature');
-creature.start();
-var space = big.use('space');
-space.start();
-var logger = big.logger;
-var user = big.use('user');
-var thing = big.use('thing');
-thing.persist('memory');
 
-big.view.create({ path: __dirname + '/../view' }, function(err, _view){
+big.use('user');
 
-  big.http.start({
+var logger = big.logger,
+    async = require('async');
+
+// TODO remove hack by having starts run automatically after .use
+async.parallel([
+  function(callback) {
+    big.use('creature').start({}, callback);
+  },
+  function(callback) {
+    big.use('space').start({}, callback);
+  }],
+function(err, results) {
+  if (err) { throw err; }
+
+  big.un.start({
+    path: __dirname + '/../view',
     root: __dirname + '/../public'
-    }, function(){
-
-    big.http.app.use(big.view.middle({view: _view}));
-    big.admin.start();
+    }, function() {
+      big.admin.start();
   });
 });
