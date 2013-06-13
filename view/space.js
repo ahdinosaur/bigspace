@@ -43,7 +43,7 @@ module['exports'] = function(options, callback) {
       }
       // view the space
       else {
-        space.toView({id: spaceID}, function(err, result) {
+        space.view.index.present({id: spaceID}, function(err, result) {
           if (err) { throw err; }
           // add the space to the dom
           $('#space').html(result);

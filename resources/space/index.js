@@ -7,6 +7,16 @@ space.schema.description = 'spaces provide a place to put/group resources';
 
 space.persist('memory');
 
+function start() {
+  var view = resource.use('view');
+  view.create({ path: __dirname + '/view' }, function(err, _view) {
+      space.view = _view;
+  });
+}
+space.method('start', start, {
+  description: "starts space"
+});
+
 space.property('id', {
   description: 'the name of the space',
   type: 'string',
@@ -267,34 +277,6 @@ space.method('pop', pop, {
     }
   }
 });
-
-function toView(options, callback) {
-  view.create({ path: __dirname + '/view' }, function(err, _view) {
-    return _view.index.present(options, callback);
-  });
-}
-
-space.method('toView', toView, {
-  description: "views space",
-  properties: {
-    options: {
-      type: 'object',
-      required: 'true',
-      properties: {
-        id: {
-          type: 'string',
-          required: true
-        }
-      }
-    },
-    callback: {
-      type: 'function',
-      required: true
-    }
-  }
-});
-
-
 
 space.dependencies = {};
 

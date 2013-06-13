@@ -65,8 +65,16 @@ module['exports'] = function(options, callback) {
       //
       // creature nav
       //
-      // add creatures to the creature bar
-      $('#creatures').append(_creature.name);
+      var tmpl = "<div class='pure-u-1-6'><a href='' class='creatureID'></a></div>";
+     // add current creature to the nav
+      $('#creatures').append(html.render({
+        'creatureID': _creature.name,
+        'creatureID.href': 'creature?id=' + _creature.id
+      }, tmpl));
+
+      // add creature page to creature bar
+      //$('#creatures').append('<form action="creature"><input type="text" name="name" /><input type="submit" /></form>');
+
       callback(null, _creature);
     },
     function(_creature, callback) {

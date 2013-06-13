@@ -21,7 +21,7 @@ module['exports'] = function(options, callback) {
       async.each(_space.resources[resourceName], function(resourceID, callback) {
 
         // view the resource instance
-        _resource.toView({id: resourceID}, function(err, result) {
+        _resource.view.index.present({id: resourceID}, function(err, result) {
           if (err) { return callback(err); }
           // append to dom
           $('#resources').append(result);
