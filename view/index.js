@@ -8,5 +8,7 @@ module['exports'] = function(options, callback) {
 
   var $ = this.$;
 
+  // TODO present an informative index of all the spaces
+
   callback(null, $.html());
 };

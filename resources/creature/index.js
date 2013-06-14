@@ -22,7 +22,14 @@ creature.method('start', start, {
 creature.property('name', {
   description: "name of the creature",
   type: 'string',
-  required: false
+  required: true
+});
+
+creature.property('description', {
+  description: "description of the creature",
+  type: 'string',
+  required: false,
+  default: ''
 });
 
 // TODO remove

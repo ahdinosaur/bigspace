@@ -11,7 +11,7 @@ module['exports'] = function(options, callback) {
   space.get(options.id, function (err, _space) {
 
     // add space name
-    $('#spaceID').html(_space.id);
+    $('.spaceID').html(_space.id);
 
     // for each resource class in the space
     async.each(Object.keys(_space.resources), function(resourceName, callback) {
@@ -21,12 +21,15 @@ module['exports'] = function(options, callback) {
       async.each(_space.resources[resourceName], function(resourceID, callback) {
 
         // view the resource instance
-        _resource.view.min.present({
-          id: resourceID
+        // TODO be able to set 'depth' of get
+        _resource.view.get.min.present({
+          data: {
+            id: resourceID
+          }
         }, function(err, result) {
           if (err) { return callback(err); }
           // append to dom
-          $('#resources').append(result);
+          $('.spaceResources').append(result);
           callback(null);
         });
 

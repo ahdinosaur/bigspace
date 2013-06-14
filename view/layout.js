@@ -21,32 +21,46 @@ module['exports'] = function(options, callback) {
   }
   */
 
-  //
-  // all-spaces nav
-  //
-  // TODO make async
-  space.all(function(err, spaces) {
-    if (err) { throw err; }
-    var tmpl = "<div class='pure-u-1-6'><a href='' class='spaceID'></a></div>";
-
-    // add each space to the nav
-    spaces.forEach(function(_space) {
-      $('#all-spaces').append(html.render({
-        'spaceID': _space.id,
-        'spaceID.href': 'space?id=' + _space.id
-      }, tmpl));
-    });
-  });
-  $('#all-spaces').append("<form action=\"space\"><input type=\"text\" name=\"id\" /><input type=\"submit\" /></form>");
-
   var session = options.request.session || {};
   async.waterfall([
+    //
+    // all-spaces nav
+    //
+    function(callback) {
+      // get all spaces
+      space.all(function(err, spaces) {
+        if (err) { return callback(err); }
+        // for each space
+        async.each(spaces,
+          function(_space, callback) {
+            // render space
+            space.view.get.min.present({
+              data: {
+                id: _space.id
+              }
+            }, function(err, result) {
+              if (err) { return callback(err); }
+              // append rendered space to dom
+              $('#all-spaces').append(result);
+              callback(null);
+          });
+        }, callback);
+      });
+    },
+
+    // add form to add new spaces
+    // TODO: this should be in "create min" or something.
+    function(callback) {
+      $('#all-spaces').append("<form action=\"space\"><input type=\"text\" name=\"id\" /><input type=\"submit\" /></form>");
+      callback(null);
+    },
+
     // get creatureID in session
     function(callback) {
       // if session does not yet have a creature
       if (typeof session.creatureID === 'undefined') {
         // TODO create a random creature
-        creature.create({name: 'bob'}, function(err, _creature) {
+        creature.create({name: 'bob', description: 'the bob creature'}, function(err, _creature) {
           if (err) { return callback(err); }
           // add creature to session
           session.creatureID = _creature.id;
@@ -58,50 +72,57 @@ module['exports'] = function(options, callback) {
         callback(null, session.creatureID);
       }
     },
+
     // get creature from creatureID
     function(creatureID, callback) {
       creature.get(creatureID, callback);
     },
-    // add creature to creature nav
+
+    //
+    // creature nav
+    //
     function(_creature, callback) {
-      //
-      // creature nav
-      //
-      var tmpl = "<div class='pure-u-1-6'><a href='' class='creatureID'></a></div>";
-     // add current creature to the nav
-      $('#creatures').append(html.render({
-        'creatureID': _creature.name,
-        'creatureID.href': 'creature?id=' + _creature.id
-      }, tmpl));
-
-      // add creature page to creature bar
-      //$('#creatures').append('<form action="creature"><input type="text" name="name" /><input type="submit" /></form>');
-
-      callback(null, _creature);
+      // render creature
+      creature.view.get.min.present({
+        data: {
+          id: _creature.id
+        }
+      }, function(err, result) {
+        if (err) { return callback(err); }
+        // append rendered creature to dom
+        $('#creatures').append(result);
+        callback(null, _creature);
+      });
     },
+
+    //
+    // in-spaces nav
+    //
     function(_creature, callback) {
       // add spaces that creature is in to #in-spaces nav
-      //
-      // in-spaces nav
-      //
-      // TODO make async
-      var tmpl = "<div class='pure-u-1-6'><a href='' class='joinSpace'></a> <a href='' class='partSpace'></a></div>";
-
-      // add each space to the nav
       if (typeof _creature.spaces !== 'undefined') {
-        _creature.spaces.forEach(function(spaceID) {
-          $('#in-spaces').append(html.render({
-            'joinSpace': spaceID,
-            'joinSpace.href': 'space?id=' + spaceID,
-            'partSpace': 'x',
-            'partSpace.href': 'space?id=' + spaceID + "&part=true"
-          }, tmpl));
-        });
-      }
-      callback(null, _creature);
+        // for each space
+        async.each(_creature.spaces,
+          function(spaceID, callback) {
+            // render space
+            space.view.get.min.present({
+              data: {
+                id: spaceID
+              }
+            }, function(err, result) {
+              if (err) { return callback(err); }
+              // add part button to rendered space
+              var dom = $.load(result);
+              dom('.space').append('<a href="space?id=' + spaceID + '&part=true">x</a>');
+              // append rendered space with part button to dom
+              $('#in-spaces').append(dom.html());
+              callback(null);
+            });
+          }, callback);
+        }
     }],
     function (err) {
-      // return
+      // return layout
       if (err) { return callback(err); }
       callback(null, $.html());
     });

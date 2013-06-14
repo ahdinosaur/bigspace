@@ -43,7 +43,7 @@ module['exports'] = function(options, callback) {
       }
       // view the space
       else {
-        space.view.get.present({
+        space.view.get.detailed.present({
           id: spaceID
         }, function(err, result) {
           if (err) { throw err; }
