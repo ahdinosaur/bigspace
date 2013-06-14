@@ -14,7 +14,7 @@ module['exports'] = function(options, callback) {
 
   // is the creature parting?
   if (options.data.part === 'true') {
-    space.pop({
+    space.remove({
     'spaceID': spaceID,
     'resource': creature,
     'resourceID': creatureID
@@ -26,7 +26,7 @@ module['exports'] = function(options, callback) {
   }
   // the creature must be joining
   else {
-    space.push({
+    space.add({
     'spaceID': spaceID,
     'resource': creature,
     'resourceID': creatureID

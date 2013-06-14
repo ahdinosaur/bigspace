@@ -48,12 +48,12 @@ space.property('resources', {
   default: {}
 });
 
-function push(options, callback) {
+function add(options, callback) {
   /*
   returns {
-    space: instance of space pushed,
+    space: instance of space added,
     newSpace: boolean of whether space is new,
-    resource: instance of resource pushing space,
+    resource: instance of resource adding space,
     newResource: boolean of whether resource is new to space
   }
   */
@@ -72,7 +72,7 @@ function push(options, callback) {
     // get space, create if not already exists
     function(callback) {
       /* returns {
-        space: instance of space pushed,
+        space: instance of space added,
         newSpace: boolean of whether space is new,
       } */
       space.get(spaceID, function (err, _space) {
@@ -100,7 +100,7 @@ function push(options, callback) {
     // add resource to space
     function(result, callback) {
       /* returns {
-        space: instance of space pushed,
+        space: instance of space added,
         newSpace: boolean of whether space is new,
       } */
       var _space = result.space;
@@ -111,9 +111,9 @@ function push(options, callback) {
         logger.info('initializing space', spaceID, 'with', resourceClass.name, resourceID);
         _space.resources[resourceClass.name] = [resourceID];
 
-      // if space doesn't have resourceID, push it
+      // if space doesn't have resourceID, add it
       } else if (_space.resources[resourceClass.name].indexOf(resourceID) === -1) {
-        logger.info('pushing', resourceClass.name, resourceID, 'to space', spaceID);
+        logger.info('adding', resourceClass.name, resourceID, 'to space', spaceID);
         _space.resources[resourceClass.name].push(resourceID);
       }
       _space.save(function(err, _space) {
@@ -128,9 +128,9 @@ function push(options, callback) {
     // add space to resource
     function(result, callback) {
       /* returns {
-        space: instance of space pushed,
+        space: instance of space added,
         newSpace: boolean of whether space is new,
-        resource: instance of resource pushing space,
+        resource: instance of resource adding space,
         newResource: boolean of whether resource is new to space
       } */
 
@@ -139,9 +139,9 @@ function push(options, callback) {
         if (err) { return callback(err); }
         // TODO don't assume every resource defaults 'spaces' property to []
         // TODO don't assume every resource has a 'spaces' property
-        // if resource doesn't have spaceID, push it
+        // if resource doesn't have spaceID, add it
         if (resourceInst.spaces.indexOf(spaceID) === -1) {
-          logger.info('pushing space', spaceID, 'to', resourceClass.name, resourceID);
+          logger.info('adding space', spaceID, 'to', resourceClass.name, resourceID);
           resourceInst.spaces.push(spaceID);
           resourceInst.save(function(err, resourceInst) {
             if (err) { return callback(err); }
@@ -163,8 +163,8 @@ function push(options, callback) {
       callback(null, result);
     });
 }
-space.method('push', push, {
-  description: "pushes a resource into a space",
+space.method('add', add, {
+  description: "adds a resource into a space",
   properties: {
     options: {
       type: 'object',
@@ -191,11 +191,11 @@ space.method('push', push, {
   }
 });
 
-function pop(options, callback) {
+function remove(options, callback) {
   /*
   returns {
-    space: instance of space being popped,
-    resource: instance of resource popped from space,
+    space: instance of space being removed,
+    resource: instance of resource removed from space,
   }
   */
 
@@ -222,13 +222,13 @@ function pop(options, callback) {
       if (typeof _space.resources[resourceClass.name] === 'undefined') {
         return callback(new Error(resourceClass.name + " resource not in space"));
 
-      // if space has resourceID, pop it
+      // if space has resourceID, remove it
       } else {
         var index = _space.resources[resourceClass.name].indexOf(resourceID);
         if (index === -1) {
           return callback(new Error(resourceClass.name + " resource not in space"));
         } else {
-          logger.info('popping', resourceClass.name, resourceID, 'from space', spaceID);
+          logger.info('removing', resourceClass.name, resourceID, 'from space', spaceID);
           _space.resources[resourceClass.name].splice(index, 1);
           _space.save(function(err, _space) {
             if (err) { return callback(err); }
@@ -242,20 +242,20 @@ function pop(options, callback) {
     // remove space from resource
     function(_space, callback) {
       /* returns {
-        space: instance of space from which resource was popped,
-        resource: instance of resource popped from space
+        space: instance of space from which resource was removed,
+        resource: instance of resource removed from space
       } */
       resourceClass.get(resourceID, function(err, resourceInst) {
         if (err) { return callback(err); }
 
         // TODO don't assume every resource defaults 'spaces' property to []
         // TODO don't assume every resource has a 'spaces' property
-        // if resource doesn't have spaceID, pop it
+        // if resource doesn't have spaceID, remove it
         var index = resourceInst.spaces.indexOf(spaceID);
         if (index === -1) {
           return callback(new Error("space " + spaceID + " not in resource"));
         } else {
-          logger.info('popping space', spaceID, 'from', resourceClass.name, resourceID);
+          logger.info('removing space', spaceID, 'from', resourceClass.name, resourceID);
           resourceInst.spaces.splice(index, 1);
           resourceInst.save(function(err, resourceInst) {
             if (err) { return callback(err); }
@@ -270,8 +270,8 @@ function pop(options, callback) {
       callback(null, result);
     });
 }
-space.method('pop', pop, {
-  description: "pops a resource into a space",
+space.method('remove', remove, {
+  description: "removes a resource from a space",
   properties: {
     options: {
       type: 'object',
