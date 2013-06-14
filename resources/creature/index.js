@@ -32,16 +32,6 @@ creature.property('description', {
   default: ''
 });
 
-// TODO remove
-creature.property('spaces', {
-  description: "spaces creature is in",
-  type: 'array',
-  default: [],
-  items: {
-    type: 'string'
-  }
-});
-
 creature.dependencies = {
   'async': '*'
 };

@@ -13,7 +13,7 @@ var logger = big.logger,
     async = require('async');
 
 // TODO remove hack by having starts run automatically after .use
-async.parallel([
+async.series([
   function(callback) {
     big.use('creature').start({}, callback);
   },

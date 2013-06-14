@@ -8,8 +8,9 @@ space.schema.description = 'spaces provide a place to put/group resources';
 space.persist('memory');
 
 function start(options, callback) {
+  var async = require('async'),
+      view = resource.use('view');
   // .view() convention
-  var view = resource.use('view');
   view.create({ path: __dirname + '/view' }, function(err, _view) {
     if (err) { callback(err); }
 
@@ -17,8 +18,10 @@ function start(options, callback) {
 
     // lazily define spaces property of resources
     // TODO figure out where resources array comes from
-    var resources = ['creature'];
+    resource.use('video');
+    var resources = ['creature', 'video'];
     for (var i = 0; i < resources.length; i++) {
+      console.log(resources[i]);
       resource[resources[i]].property('spaces', {
         description: "spaces resource is in",
         type: 'array',
@@ -139,8 +142,21 @@ function add(options, callback) {
         if (err) { return callback(err); }
         // TODO don't assume every resource defaults 'spaces' property to []
         // TODO don't assume every resource has a 'spaces' property
+        // if resource has none of this space, init resource with [spaceID]
+        if (typeof resourceInst.spaces === 'undefined') {
+          // add resource to space
+          logger.info('initializing resource', resourceClass.name, resourceID, 'with', spaceID);
+          resourceInst.spaces = [resourceID];
+          resourceInst.save(function(err, resourceInst) {
+            if (err) { return callback(err); }
+            logger.info('saved', resourceClass.name, resourceID);
+            result.resource = resourceInst;
+            result.newResource = true;
+            return callback(null, result);
+          });
+        }
         // if resource doesn't have spaceID, add it
-        if (resourceInst.spaces.indexOf(spaceID) === -1) {
+        else if (resourceInst.spaces.indexOf(spaceID) === -1) {
           logger.info('adding space', spaceID, 'to', resourceClass.name, resourceID);
           resourceInst.spaces.push(spaceID);
           resourceInst.save(function(err, resourceInst) {
@@ -218,12 +234,12 @@ function remove(options, callback) {
     function(_space, callback) {
       /* returns space */
 
-      // if space has none of this resource, init resource with [resourceID]
+      // if space has none of this resource, throw err
       if (typeof _space.resources[resourceClass.name] === 'undefined') {
         return callback(new Error(resourceClass.name + " resource not in space"));
-
-      // if space has resourceID, remove it
+      // otherwise
       } else {
+        // if space has resourceID, remove it
         var index = _space.resources[resourceClass.name].indexOf(resourceID);
         if (index === -1) {
           return callback(new Error(resourceClass.name + " resource not in space"));

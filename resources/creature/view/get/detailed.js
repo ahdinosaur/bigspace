@@ -33,9 +33,15 @@ module['exports'] = function(options, callback) {
         callback(null);
       });
     };
-    async.each(creatureInst.spaces, appendSpace, function(err) {
-      if (err) { return callback(err); }
+    // TODO should be able to tell collection of resources
+    // to go view themselves
+    if (typeof creatureInst.spaces !== 'undefined') {
+      async.each(creatureInst.spaces, appendSpace, function(err) {
+        if (err) { return callback(err); }
+        callback(null, $.html());
+      });
+    } else {
       callback(null, $.html());
-    });
+    }
   });
 };

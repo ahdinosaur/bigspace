@@ -1,4 +1,5 @@
 var resource = require('resource'),
+    logger = resource.logger,
     async = require('async'),
     html = require('html-lang'),
     fs = require('fs');
@@ -22,6 +23,7 @@ module['exports'] = function(options, callback) {
   */
 
   var session = options.request.session || {};
+
   async.waterfall([
     //
     // all-spaces nav
@@ -69,7 +71,7 @@ module['exports'] = function(options, callback) {
       // if session has a creature
       } else {
         // use it
-        callback(null, session.creatureID);
+        return callback(null, session.creatureID);
       }
     },
 
@@ -100,6 +102,7 @@ module['exports'] = function(options, callback) {
     //
     function(_creature, callback) {
       // add spaces that creature is in to #in-spaces nav
+      logger.info(_creature.spaces);
       if (typeof _creature.spaces !== 'undefined') {
         // for each space
         async.each(_creature.spaces,
@@ -119,6 +122,8 @@ module['exports'] = function(options, callback) {
               callback(null);
             });
           }, callback);
+        } else {
+          callback(null);
         }
     }],
     function (err) {
