@@ -19,7 +19,7 @@ module['exports'] = function(options, callback) {
     'resource': creature,
     'resourceID': creatureID
     }, function(err, result) {
-      if (err) { throw err; }
+      if (err) { return callback(err); }
       // redirect to index
       options.response.redirect('index');
     });
@@ -31,7 +31,7 @@ module['exports'] = function(options, callback) {
     'resource': creature,
     'resourceID': creatureID
     }, function(err, result) {
-      if (err) { throw err; }
+      if (err) { return callback(err); }
       // if we need to refresh space,
       // this happens if
       //   a) this is a new space
@@ -46,7 +46,7 @@ module['exports'] = function(options, callback) {
         space.view.get.detailed.present({
           id: spaceID
         }, function(err, result) {
-          if (err) { throw err; }
+          if (err) { return callback(err); }
           // add the space to the dom
           $('#space').html(result);
           // return

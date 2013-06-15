@@ -124,7 +124,7 @@ module['exports'] = function(options, callback) {
     }],
     function (err) {
       // return layout
-      if (err) { return callback(err); }
+      if (err) { throw err; }
       callback(null, $.html());
     });
 };
