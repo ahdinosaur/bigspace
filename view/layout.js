@@ -14,11 +14,11 @@ module['exports'] = function(options, callback) {
   //
   var user =  options.request.user;
   if (typeof user !== 'undefined') {
-    $('#header').html("<p>hi " + user.id + "</p>");
+    $('#auth-nav').html("<p>hi " + user.id + "</p>");
   } else {
     var auth = resource.use('auth');
     auth.view.login.min.present({}, function(err, result) {
-      $('#header').html(result);
+      $('#auth-nav').html(result);
     });
   }
 
@@ -42,7 +42,7 @@ module['exports'] = function(options, callback) {
             }, function(err, result) {
               if (err) { return callback(err); }
               // append rendered space to dom
-              $('#all-spaces').append(result);
+              $('#all-spaces-nav').append(result);
               callback(null);
           });
         }, callback);
@@ -52,7 +52,7 @@ module['exports'] = function(options, callback) {
     // add form to add new spaces
     // TODO: this should be in "create min" or something.
     function(callback) {
-      $('#all-spaces').append("<form action=\"space\"><input type=\"text\" name=\"id\" /><input type=\"submit\" /></form>");
+      $('#all-spaces-nav').append("<div class='pure-u-1-6'><form action='space'><input type='text' name='id' size='16' /><input type='submit' value='join' /></form></div>");
       callback(null);
     },
 
@@ -91,7 +91,7 @@ module['exports'] = function(options, callback) {
       }, function(err, result) {
         if (err) { return callback(err); }
         // append rendered creature to dom
-        $('#creatures').append(result);
+        $('#creatures-nav').append(result);
         callback(null, _creature);
       });
     },
@@ -116,7 +116,7 @@ module['exports'] = function(options, callback) {
               var dom = $.load(result);
               dom('.space').append('<a href="space?id=' + spaceID + '&part=true">x</a>');
               // append rendered space with part button to dom
-              $('#in-spaces').append(dom.html());
+              $('#in-spaces-nav').append(dom.html());
               callback(null);
             });
           }, callback);
