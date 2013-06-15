@@ -21,26 +21,21 @@ function start(options, callback) {
       }
     }
 
-    http.start({
-      root: options.root
-      }, function() {
+    http.app.use(view.middle({view: _view}));
 
-      http.app.use(view.middle({view: _view}));
-      callback();
-    });
+    callback(null);
   });
 }
 un.method('start', start, {
   description: "starts un",
   properties: {
     options: {
+      type: 'object',
       properties: {
-
+        path: {
+          type: 'string'
+        }
       }
-      //properties: {
-      //  path: view.schema.properties.path,
-      //  root: http.start.schema.properties.root
-     // }
     },
     callback: {
       type: 'function'
@@ -50,5 +45,5 @@ un.method('start', start, {
 
 un.dependencies = {};
 
-un.license = "AGPLv3";
+un.license = "MIT";
 exports.un = un;

@@ -1,0 +1,19 @@
+<div class="pure-u-1-6">
+  <form action="/auth/browserid" method="post" style="display:none;" id="authform">
+    <input type="text" name="assertion" id="authinput" />
+  </form>
+  <img src="https://developer.mozilla.org/files/3957/email_sign_in_blue.png" id="browserid" onclick="auth();" />
+</div>
+
+<script>
+function auth() {
+  navigator.id.get(function(assertion) {
+    if (assertion) {
+      document.getElementById("authinput").value = assertion;
+      document.getElementById("authform").submit();
+    } else { 
+      location.reload();
+    }
+  });
+}
+</script>

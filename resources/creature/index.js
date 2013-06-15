@@ -7,7 +7,9 @@ creature.schema.description = "example resource for creatures like dragons, unic
 
 creature.persist('memory');
 
+// .start() convention
 function start(options, callback) {
+  // setup .view convention
   var view = resource.use('view');
   view.create({ path: __dirname + '/view' }, function(err, _view) {
       if (err) { callback(err); }

@@ -33,7 +33,15 @@ function start(options, callback) {
   });
 }
 space.method('start', start, {
-  description: "starts space"
+  description: "starts space",
+  properties: {
+    options: {
+      type: 'object'
+    },
+    callback: {
+      type: 'function'
+    }
+  }
 });
 
 space.property('id', {
@@ -298,7 +306,9 @@ space.method('pop', pop, {
   }
 });
 
-space.dependencies = {};
+space.dependencies = {
+  'async': '*'
+};
 
 space.license = "AGPLv3";
 exports.space = space;
