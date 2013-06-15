@@ -52,8 +52,11 @@ module['exports'] = function(options, callback) {
     // add form to add new spaces
     // TODO: this should be in "create min" or something.
     function(callback) {
-      $('#all-spaces-nav').append("<div class='pure-u-1-6'><form action='space'><input type='text' name='id' size='16' /><input type='submit' value='join' /></form></div>");
-      callback(null);
+      space.view.create.min.present({}, function(err, result) {
+        if (err) { return callback(err); }
+        $('#all-spaces-nav').append(result);
+        return callback(null);
+      });
     },
 
     // get creatureID in session

@@ -41,14 +41,41 @@ module['exports'] = function(options, callback) {
         // TODO find better way to refresh
         options.response.redirect('space?id=' + spaceID);
       }
-      // view the space
+      // view the space and available resources
       else {
-        space.view.get.detailed.present({
-          id: spaceID
-        }, function(err, result) {
+        async.parallel([
+          // view the space
+          // TODO allow various zoom levels of space
+          function(callback) {
+            space.view.get.detailed.present({
+                id: spaceID
+              }, function(err, result) {
+                if (err) { return callback(err); }
+                // add the space to the dom
+                $('#space').html(result);
+                callback(null);
+              });
+          },
+
+          //
+          // resources nav
+          //
+          function(callback) {
+            var resourceNames = ['space'];
+            // for each resource
+            async.each(resourceNames,
+              // render
+              function(resourceName, callback) {
+                resource[resourceName].view.create.min.present({}, function(err, result) {
+                  if (err) { return callback(err); }
+                  $('#resources-nav').append(result);
+                  callback(null);
+                });
+              },
+              callback);
+          }],
+        function(err) {
           if (err) { return callback(err); }
-          // add the space to the dom
-          $('#space').html(result);
           // return
           callback(null, $.html());
         });
