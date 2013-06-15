@@ -10,3 +10,6 @@
 [submodule "resources/auth-browserid"]
 	path = resources/auth-browserid
 	url = https://github.com/ahdinosaur/auth-browserid.git
+[submodule "resources/auth-github"]
+	path = resources/auth-github
+	url = https://github.com/ahdinosaur/auth-github.git
