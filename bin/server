@@ -2,8 +2,6 @@
 
 var big = require('big');
 
-big.use('user');
-
 var logger = big.logger,
     async = require('async');
 
@@ -28,7 +26,7 @@ async.series([
     big.use('un').start({path: __dirname + '/../view'}, callback);
   },
   function(callback) {
-    big.use('admin').start();
+    big.use('admin').start({}, callback);
   }],
 function(err, results) {
   if (err) { throw err; }
