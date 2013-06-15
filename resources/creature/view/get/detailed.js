@@ -22,20 +22,17 @@ module['exports'] = function(options, callback) {
     }, self.template));
 
     // list this creature's spaces
-    var appendSpace = function(spaceID, callback) {
-      space.view.get.min.present({
-        data: {
-          id: spaceID
-        }
-      }, function(err, result) {
-        if (err) { return callback(err); }
-        $('.creatureSpaces').append(result);
-        callback(null);
-      });
-    };
-    async.each(creatureInst.spaces, appendSpace, function(err) {
+    space.view.get.min.present({
+      data: {
+        id: creatureInst.spaces,
+        part: true
+      }
+    }, function(err, result) {
       if (err) { return callback(err); }
-      callback(null, $.html());
+
+      // append rendered space with part button to dom
+      $('.creatureSpaces').append(result);
+      callback(null);
     });
   });
 };

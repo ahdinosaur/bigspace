@@ -11,6 +11,7 @@ module['exports'] = function(options, callback) {
 
   // if given a single id, turn it into an array for consistent typing
   // TODO: should this handle the case of an undefined ID?
+  // TODO: make it so this can handle a single space / array of spaces as well
   var spaceIDs = options.data.id;
   if (typeof spaceIDs !== 'array' && typeof spaceIDs === 'string') {
     spaceIDs = [spaceIDs];
@@ -18,7 +19,6 @@ module['exports'] = function(options, callback) {
 
   // for each of the given spaceIDs
   async.each(spaceIDs, function(spaceID, callback) {
-      console.log(spaceID);
 
     // get the space we are viewing
     space.get(spaceID, function(err, spaceInst) {
