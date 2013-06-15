@@ -25,7 +25,7 @@ async.series([
     big.use('space').start({}, callback);
   },
   function(callback) {
-    big.use('un').start({path: __dirname + '/../view'});
+    big.use('un').start({path: __dirname + '/../view'}, callback);
   },
   function(callback) {
     big.use('admin').start();
