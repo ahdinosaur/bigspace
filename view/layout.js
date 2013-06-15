@@ -102,24 +102,40 @@ module['exports'] = function(options, callback) {
     function(_creature, callback) {
       // add spaces that creature is in to #in-spaces nav
       if (typeof _creature.spaces !== 'undefined') {
+
+        space.view.get.min.present({
+          data: {
+            id: _creature.spaces,
+            part: true
+          }
+        }, function(err, result) {
+          if (err) { return callback(err); }
+
+          // append rendered space with part button to dom
+          $('#in-spaces-nav').append(result);
+          callback(null);
+        });
+
+
         // for each space
-        async.each(_creature.spaces,
-          function(spaceID, callback) {
-            // render space
-            space.view.get.min.present({
-              data: {
-                id: spaceID
-              }
-            }, function(err, result) {
-              if (err) { return callback(err); }
-              // add part button to rendered space
-              var dom = $.load(result);
-              dom('.space').append('<a href="space?id=' + spaceID + '&part=true">x</a>');
-              // append rendered space with part button to dom
-              $('#in-spaces-nav').append(dom.html());
-              callback(null);
-            });
-          }, callback);
+        //async.each(_creature.spaces,
+        //  function(spaceID, callback) {
+        //    // render space
+        //    space.view.get.min.present({
+        //      data: {
+        //        id: spaceID
+        //      }
+        //    }, function(err, result) {
+        //      if (err) { return callback(err); }
+        //      // add part button to rendered space
+        //      var dom = $.load(result);
+        //      dom('.space').append('<a href="space?id=' + spaceID + '&part=true">x</a>');
+        //      // append rendered space with part button to dom
+        //      $('#in-spaces-nav').append(dom.html());
+        //      callback(null);
+        //    });
+        //  }, callback);
+
         }
     }],
     function (err) {

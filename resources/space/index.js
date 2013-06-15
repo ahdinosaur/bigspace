@@ -17,7 +17,7 @@ function start(options, callback) {
 
     // lazily define spaces property of resources
     // TODO figure out where resources array comes from
-    var resources = ['creature'];
+    var resources = ['creature']; //, 'text'];
     for (var i = 0; i < resources.length; i++) {
       resource[resources[i]].property('spaces', {
         description: "spaces resource is in",
