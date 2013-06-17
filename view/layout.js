@@ -57,14 +57,6 @@ module['exports'] = function(options, callback) {
       });
     },
 
-    // add form to add new spaces
-    function(callback) {
-      space.view.create.min.present({}, function(err, result) {
-        if (err) { return callback(err); }
-        $('#all-spaces-nav').append(result);
-        return callback(null);
-      });
-    },
 
     // get creatureID in session
     function(callback) {
@@ -90,20 +82,23 @@ module['exports'] = function(options, callback) {
     },
 
     //
-    // creature nav
+    // top menu
     //
+    // make creature buttons
     function(_creature, callback) {
-      // render creature
-      creature.view.get.min.present({
+
+      // get view of this creature
+      creature.view.get.button.present({
         data: {
           id: _creature.id
         }
       }, function(err, result) {
         if (err) { return callback(err); }
-        // append rendered creature to dom
-        $('#creatures-nav').append(result);
-        callback(null, _creature);
+
+        // append current creature as a button
+        $('#top-menu').append(result);
       });
+      callback(null, _creature);
     },
 
     //
@@ -113,7 +108,7 @@ module['exports'] = function(options, callback) {
       // add spaces that creature is in to #in-spaces nav
       if (typeof _creature.spaces !== 'undefined') {
 
-        space.view.get.min.present({
+        space.view.get.button.present({
           data: {
             id: _creature.spaces,
             part: true
@@ -126,6 +121,16 @@ module['exports'] = function(options, callback) {
           callback(null);
         });
         }
+    },
+
+    // add form to add new spaces
+    function(callback) {
+      space.view.create.min.present({}, function(err, result) {
+        if (err) { return callback(err); }
+        $('#in-spaces-nav').append(result);
+        return callback(null);
+      });
+
     }],
     function (err) {
       // return layout
