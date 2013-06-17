@@ -1,6 +1,7 @@
 var resource = require('resource'),
     async = require('async'),
     html = require('html-lang'),
+    Faker = require('Faker'),
     fs = require('fs');
 
 module['exports'] = function(options, callback) {
@@ -60,10 +61,13 @@ module['exports'] = function(options, callback) {
 
     // get creatureID in session
     function(callback) {
-      // if session does not yet have a creature
+      // if session does not yet have a creature, generate a random one
       if (typeof session.creatureID === 'undefined') {
-        // TODO create a random creature
-        creature.create({name: 'bob', description: 'the bob creature'}, function(err, _creature) {
+        var creatureName = Faker.Name.lastName();
+        creature.create({
+          'name': creatureName,
+          'description': Faker.Lorem.sentence()
+        }, function(err, _creature) {
           if (err) { return callback(err); }
           // add creature to session
           session.creatureID = _creature.id;
