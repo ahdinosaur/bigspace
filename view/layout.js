@@ -28,36 +28,35 @@ module['exports'] = function(options, callback) {
     // all-spaces nav
     //
     function(callback) {
+
+      // TODO: update the following once we can pass spaces into space.view.get.min
       // get all spaces
       space.all(function(err, spaces) {
         if (err) { return callback(err); }
-        // for each space
-        async.each(spaces,
+
+        // retrieve each space id, then render them all
+        async.map(spaces,
           function(_space, callback) {
-            // render space
+              callback(null, _space.id);
+
+          // render spaces
+          }, function(err, spaces) {
+            if (err) { return callback(err); }
             space.view.get.min.present({
               data: {
-                id: _space.id
+                id: spaces
               }
+
+            // append rendered spaces to dom
             }, function(err, result) {
               if (err) { return callback(err); }
-              // append rendered space to dom
               $('#all-spaces-nav').append(result);
               callback(null);
-          });
-        }, callback);
+            });
+        });
       });
     },
 
-    // add form to add new spaces
-    // TODO: this should be in "create min" or something.
-    function(callback) {
-      space.view.create.min.present({}, function(err, result) {
-        if (err) { return callback(err); }
-        $('#all-spaces-nav').append(result);
-        return callback(null);
-      });
-    },
 
     // get creatureID in session
     function(callback) {
@@ -83,20 +82,23 @@ module['exports'] = function(options, callback) {
     },
 
     //
-    // creature nav
+    // top menu
     //
+    // make creature buttons
     function(_creature, callback) {
-      // render creature
-      creature.view.get.min.present({
+
+      // get view of this creature
+      creature.view.get.button.present({
         data: {
           id: _creature.id
         }
       }, function(err, result) {
         if (err) { return callback(err); }
-        // append rendered creature to dom
-        $('#creatures-nav').append(result);
-        callback(null, _creature);
+
+        // append current creature as a button
+        $('#top-menu').append(result);
       });
+      callback(null, _creature);
     },
 
     //
@@ -106,7 +108,7 @@ module['exports'] = function(options, callback) {
       // add spaces that creature is in to #in-spaces nav
       if (typeof _creature.spaces !== 'undefined') {
 
-        space.view.get.min.present({
+        space.view.get.button.present({
           data: {
             id: _creature.spaces,
             part: true
@@ -118,28 +120,17 @@ module['exports'] = function(options, callback) {
           $('#in-spaces-nav').append(result);
           callback(null);
         });
-
-
-        // for each space
-        //async.each(_creature.spaces,
-        //  function(spaceID, callback) {
-        //    // render space
-        //    space.view.get.min.present({
-        //      data: {
-        //        id: spaceID
-        //      }
-        //    }, function(err, result) {
-        //      if (err) { return callback(err); }
-        //      // add part button to rendered space
-        //      var dom = $.load(result);
-        //      dom('.space').append('<a href="space?id=' + spaceID + '&part=true">x</a>');
-        //      // append rendered space with part button to dom
-        //      $('#in-spaces-nav').append(dom.html());
-        //      callback(null);
-        //    });
-        //  }, callback);
-
         }
+    },
+
+    // add form to add new spaces
+    function(callback) {
+      space.view.create.min.present({}, function(err, result) {
+        if (err) { return callback(err); }
+        $('#in-spaces-nav').append(result);
+        return callback(null);
+      });
+
     }],
     function (err) {
       // return layout
