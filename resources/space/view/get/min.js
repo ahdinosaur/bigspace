@@ -26,7 +26,7 @@ module['exports'] = function(options, callback) {
 
       // render and append this space
       $.root().append(html.render({
-        'spaceID': spaceInst.id,
+        'spaceID': '#' + spaceInst.id,
         'spaceID.href': "space?id=" + spaceInst.id,
 
         // add part button to rendered space
