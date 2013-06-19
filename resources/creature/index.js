@@ -1,21 +1,39 @@
 var resource = require('resource'),
-    view = resource.use('view'),
     space = resource.use('space'),
     creature = resource.define('creature');
 
-creature.schema.description = "example resource for creatures like dragons, unicorns, and ponies";
+creature.schema.description = "resource for user-controlled creatures like dragons, unicorns, and ponies";
 
 creature.persist('memory');
 
 // .start() convention
 function start(options, callback) {
-  // setup .view convention
-  var view = resource.use('view');
-  view.create({ path: __dirname + '/view' }, function(err, _view) {
-      if (err) { callback(err); }
-      creature.view = _view;
+  var async = require('async');
+
+  async.parallel([
+    // setup .view convention
+    function(callback) {
+      var view = resource.use('view');
+      view.create({ path: __dirname + '/view' }, function(err, _view) {
+          if (err) { callback(err); }
+          creature.view = _view;
+          callback(null);
+      });
+    },
+    // add creatures property to user resource
+    function(callback) {
+      var user = resource.use('user');
+      user.property('creatures', {
+        description: 'user controlled creatures',
+        type: 'array',
+        items: {
+          type: 'string',
+          description: 'creature id'
+        },
+        default: []
+      });
       callback(null);
-  });
+    }], callback);
 }
 creature.method('start', start, {
   description: "starts creature"
