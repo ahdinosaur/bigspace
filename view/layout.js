@@ -132,7 +132,11 @@ module['exports'] = function(options, callback) {
 
     // add form to add new spaces
     function(callback) {
-      space.view.create.min.present({}, function(err, result) {
+      space.view.create.index.present({
+        data: {
+          depth: 'min'
+        }
+      }, function(err, result) {
         if (err) { return callback(err); }
         $('#in-spaces-nav').append(result);
         return callback(null);
