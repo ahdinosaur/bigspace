@@ -22,6 +22,7 @@
     "passport": "~0.1.17",
     "passport-browserid": "~0.1.4",
     "async": "~0.2.9",
-    "html-lang": "~0.2.0"
+    "html-lang": "~0.2.0",
+    "Faker": "~0.5.11"
   }
 }
