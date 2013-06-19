@@ -14,9 +14,6 @@ async.series([
     big.use('auth-browserid').start({}, callback);
   },
   function(callback) {
-    big.use('auth').start({}, callback);
-  },
-  function(callback) {
     big.use('creature').start({}, callback);
   },
   function(callback) {
