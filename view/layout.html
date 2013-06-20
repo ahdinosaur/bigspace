@@ -25,6 +25,24 @@
       <nav id='auth-nav'>
       </nav>
       <hr />
+
+      <!-- auth dropdown -->
+      <div id="auth-dropdown" class="dropdown dropdown-tip">
+        <ul class="dropdown-menu">
+          <li><a onclick="auth()" href="#1">Item 1</a></li>
+          <li><a href="#2">Item 2</a></li>
+          <li><a href="#3">Item 3</a></li>
+          <li class="dropdown-divider"></li>
+          <li><a href="#4">Item 4</a></li>
+          <li><a href="#5">Item 5</a></li>
+          <li><a href="#5">Item 6</a></li>
+        </ul>
+      </div>
+      <div style="float:right;" class="pure-button" data-dropdown="#auth-dropdown">
+        Login With:
+      </div>
+
+      <!-- top menu -->
       <div class='pure-menu pure-menu-open pure-menu-horizontal'>
         <ul id='top-menu'>
           <li><a href='space/index'>spaceIndex</a></li>
