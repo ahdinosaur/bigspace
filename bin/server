@@ -1,29 +1,29 @@
 #!/usr/bin/env node
 
-var big = require('big');
+var resource = require('resource');
 
-var logger = big.logger,
+var logger = resource.logger,
     async = require('async');
 
 // TODO remove hack by having starts run automatically after .use
 async.series([
   function(callback) {
-    big.use('http').start({path: __dirname + '/../public'}, callback);
+    resource.use('http').start({path: __dirname + '/../public'}, callback);
   },
   function(callback) {
-    big.use('auth-browserid').start({}, callback);
+    resource.use('auth-browserid').start({}, callback);
   },
   function(callback) {
-    big.use('creature').start({}, callback);
+    resource.use('creature').start({}, callback);
   },
   function(callback) {
-    big.use('space').start({}, callback);
+    resource.use('space').start({}, callback);
   },
   function(callback) {
-    big.use('un').start({path: __dirname + '/../view'}, callback);
+    resource.use('un').start({path: __dirname + '/../view'}, callback);
   },
   function(callback) {
-    big.use('admin').start({}, callback);
+    resource.use('admin').start({}, callback);
   }],
 function(err, results) {
   if (err) { throw err; }
