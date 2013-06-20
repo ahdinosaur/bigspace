@@ -10,21 +10,27 @@ module['exports'] = function(options, callback) {
 
   var $ = this.$;
 
-  //
-  // auth nav
-  //
-  var user =  options.request.user;
-  if (typeof user !== 'undefined') {
-    $('#auth-nav').html("<p>hi " + user.id + "</p>");
-  } else {
-    var auth = resource.use('auth');
-    auth.view.login.min.present({}, function(err, result) {
-      $('#auth-nav').html(result);
-    });
-  }
-
   var session = options.request.session || {};
   async.waterfall([
+    //
+    // auth nav
+    //
+    function(callback) {
+      var auth = resource.use('auth');
+      auth.view.login.present({anchor: 'right'}, function(err, result) {
+        if (err) return callback(err);
+        $('#authNav').html(result);
+        return callback(null);
+      });
+    },
+    // add user info if logged in
+    function(callback) {
+      var user =  options.request.user;
+      if (typeof user !== 'undefined') {
+        $('#user-info').html("<p>hi " + user.id + "</p>");
+      }
+      return callback(null);
+    },
     //
     // all-spaces nav
     //
