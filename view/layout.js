@@ -102,7 +102,7 @@ module['exports'] = function(options, callback) {
         if (err) { return callback(err); }
 
         // append current creature as a button
-        $('#top-menu').append('<li>' + result + '</li>');
+        //$('#top-menu').append('<li>' + result + '</li>');
       });
       callback(null, _creature);
     },
