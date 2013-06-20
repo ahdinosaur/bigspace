@@ -32,6 +32,7 @@ function start(options, callback) {
         },
         default: []
       });
+      user.persist('memory');
       callback(null);
     }], callback);
 }
