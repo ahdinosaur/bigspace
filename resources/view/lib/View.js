@@ -208,13 +208,9 @@ View.prototype.present = function(options, callback) {
 
   var self = this;
 
-  // default present layout
-  var useLayout = options.layout || true;
-
   // if this is not a layout, do perform layout
   if ((self.name !== "layout") &&
     (typeof options.layout === 'undefined' || options.layout)) {
-    console.log(self.name, options, useLayout);
     // load query
     self.$ = query(self.template);
     layout.call(self, self, options, function(err, result) {
