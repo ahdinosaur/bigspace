@@ -29,7 +29,7 @@ module['exports'] = function(options, callback) {
         }, function(err, result) {
           if (err) { return callback(err); }
           // append to dom
-          $('.spaceResources').append(result);
+          $('.spaceResources').append('<li>' + result + '</li>');
           callback(null);
         });
 

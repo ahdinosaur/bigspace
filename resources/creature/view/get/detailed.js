@@ -22,15 +22,16 @@ module['exports'] = function(options, callback) {
     }, self.template));
 
     // list this creature's spaces
-    space.view.get.min.present({
+    space.view.get.index.present({
       data: {
-        id: creatureInst.spaces
+        id: creatureInst.spaces,
+        depth: 'min'
       }
     }, function(err, result) {
       if (err) { return callback(err); }
 
       // append rendered space with part button to dom
-      $('.creatureSpaces').append(result);
+      $('.creatureSpaces').append('<li>' + result + '</li>');
 
       // return
       callback(null, $.html());

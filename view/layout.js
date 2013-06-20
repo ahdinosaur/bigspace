@@ -43,9 +43,10 @@ module['exports'] = function(options, callback) {
           // render spaces
           }, function(err, spaces) {
             if (err) { return callback(err); }
-            space.view.get.min.present({
+            space.view.get.index.present({
               data: {
-                id: spaces
+                id: spaces,
+                depth: 'min'
               }
 
             // append rendered spaces to dom
@@ -92,15 +93,16 @@ module['exports'] = function(options, callback) {
     function(_creature, callback) {
 
       // get view of this creature
-      creature.view.get.button.present({
+      creature.view.get.index.present({
         data: {
-          id: _creature.id
+          id: _creature.id,
+          depth: 'min'
         }
       }, function(err, result) {
         if (err) { return callback(err); }
 
         // append current creature as a button
-        $('#top-menu').append(result);
+        $('#top-menu').append('<li>' + result + '</li>');
       });
       callback(null, _creature);
     },
@@ -112,16 +114,17 @@ module['exports'] = function(options, callback) {
       // add spaces that creature is in to #in-spaces nav
       if (typeof _creature.spaces !== 'undefined') {
 
-        space.view.get.button.present({
+        space.view.get.index.present({
           data: {
             id: _creature.spaces,
+            depth: 'min',
             part: true
           }
         }, function(err, result) {
           if (err) { return callback(err); }
 
-          // append rendered space with part button to dom
-          $('#in-spaces-nav').append(result);
+          // append rendered space to dom
+          $('#in-spaces-nav').append('<li>' + result + '</li>');
           callback(null);
         });
         }
@@ -129,7 +132,11 @@ module['exports'] = function(options, callback) {
 
     // add form to add new spaces
     function(callback) {
-      space.view.create.min.present({}, function(err, result) {
+      space.view.create.index.present({
+        data: {
+          depth: 'min'
+        }
+      }, function(err, result) {
         if (err) { return callback(err); }
         $('#in-spaces-nav').append(result);
         return callback(null);
