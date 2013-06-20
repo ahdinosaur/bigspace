@@ -7,11 +7,18 @@ var logger = resource.logger,
 
 // TODO remove hack by having starts run automatically after .use
 async.series([
+  // start config
+  function(callback) {
+    resource.use('config').start(callback);
+  },
   function(callback) {
     resource.use('http').start({path: __dirname + '/../public'}, callback);
   },
   function(callback) {
     resource.use('auth-browserid').start({}, callback);
+  },
+  function(callback) {
+    resource.use('auth-github').start({}, callback);
   },
   function(callback) {
     resource.use('creature').start({}, callback);
