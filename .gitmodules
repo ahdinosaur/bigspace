@@ -13,3 +13,6 @@
 [submodule "resources/auth-github"]
 	path = resources/auth-github
 	url = https://github.com/ahdinosaur/auth-github.git
+[submodule "resources/auth-google-oauth"]
+	path = resources/auth-google-oauth
+	url = https://github.com/ahdinosaur/auth-google-oauth.git
