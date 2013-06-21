@@ -1,10 +1,10 @@
-# hacking on unbazaar
+# hacking on bigspace
 
 ## how to run
 
 ```
-git clone https://github.com/ahdinosaur/hackbazaar.git
-cd hackbazaar
+git clone https://github.com/ahdinosaur/bigspace.git
+cd bigspace
 git checkout master # or whatever branch you want
 npm install
 git submodule init
