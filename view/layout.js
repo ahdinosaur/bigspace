@@ -132,7 +132,6 @@ module['exports'] = function(options, callback) {
 
           async.series([
             // append this space's view
-            // TODO: make this use async
             function (callback) {
               space.view.index.present({
                 data: {
