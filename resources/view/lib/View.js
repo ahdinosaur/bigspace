@@ -214,8 +214,7 @@ View.prototype.present = function(options, callback) {
     // load query
     self.$ = query(self.template);
     layout.call(self, self, options, function(err, result) {
-      if (err)
-        throw err;
+      if (err) { return callback(err); }
 
       // update template and reload query
       self.$ = query(result);
