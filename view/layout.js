@@ -25,9 +25,13 @@ module['exports'] = function(options, callback) {
     },
     // add user info if logged in
     function(callback) {
-      var user =  options.request.user;
+      var user =  options.request.user,
+          tmpl = "hi <a href='' class='userID'></a>!";
       if (typeof user !== 'undefined') {
-        $('#user-info').html("<p>hi " + user.id + "</p>");
+        $('#userInfo').html(html.render({
+          "userID": user.id,
+          "userID.href": "user?id=" + user.id
+        }, tmpl));
       }
       return callback(null);
     },
