@@ -2,5 +2,9 @@
   "auth-github": {
     "clientID": "32ee2abfd081e8538423",
     "clientSecret": "f4a32a4afbc13bb91cdbb52570dbca4fb4969c21"
+  },
+  "auth-google-oauth": {
+    "clientID": "652459274192.apps.googleusercontent.com",
+    "clientSecret": "-BxWO-m8G2AafMTCQSUkV1Xk"
   }
 }

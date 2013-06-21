@@ -21,6 +21,9 @@ async.series([
     resource.use('auth-github').start({}, callback);
   },
   function(callback) {
+    resource.use('auth-google-oauth').start({}, callback);
+  },
+  function(callback) {
     resource.use('creature').start({}, callback);
   },
   function(callback) {
