@@ -9,6 +9,7 @@ module['exports'] = function(options, callback) {
 
   // get the space we are viewing
   space.get(options.data.id, function (err, _space) {
+    if (err) { return callback(err); }
 
     // add space name
     $('.spaceID').html(_space.id);

@@ -13,7 +13,10 @@ module['exports'] = function(options, callback) {
   // determine desired action of view, default to get
   var action = options.data.action || 'get';
   creature.view[action].index.present(options, function(err, result) {
-    if (err) { callback(err); }
+
+    // display errors on layout
+    if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+
     if (options.layout !== false) {
       $('#main').html(result);
       callback(null, $.html());

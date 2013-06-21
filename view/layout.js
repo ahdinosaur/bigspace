@@ -191,8 +191,10 @@ module['exports'] = function(options, callback) {
 
     }],
     function (err) {
-      // return layout
-      if (err) { throw err; }
+
+      // display errors on layout
+      if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+
       callback(null, $.html());
     });
 };
