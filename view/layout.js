@@ -49,11 +49,13 @@ module['exports'] = function(options, callback) {
           // render spaces
           }, function(err, spaces) {
             if (err) { return callback(err); }
-            space.view.get.index.present({
+            space.view.index.present({
               data: {
                 id: spaces,
+                action: 'get',
                 depth: 'min'
-              }
+              },
+              layout: false
 
             // append rendered spaces to dom
             }, function(err, result) {
@@ -64,7 +66,6 @@ module['exports'] = function(options, callback) {
         });
       });
     },
-
 
     // get creatureID in session
     function(callback) {
@@ -99,16 +100,18 @@ module['exports'] = function(options, callback) {
     function(_creature, callback) {
 
       // get view of this creature
-      creature.view.get.index.present({
+      creature.view.index.present({
         data: {
           id: _creature.id,
+          action: 'get',
           depth: 'min'
-        }
+        },
+        layout: false
       }, function(err, result) {
         if (err) { return callback(err); }
 
         // append current creature as a button
-        //$('#top-menu').append('<li>' + result + '</li>');
+        $('#top-menu').append('<li>' + result + '</li>');
       });
       callback(null, _creature);
     },
@@ -116,32 +119,67 @@ module['exports'] = function(options, callback) {
     //
     // in-spaces nav
     //
+    // add spaces that creature is in to #in-spaces nav
     function(_creature, callback) {
-      // add spaces that creature is in to #in-spaces nav
       if (typeof _creature.spaces !== 'undefined') {
 
-        space.view.get.index.present({
-          data: {
-            id: _creature.spaces,
-            depth: 'min',
-            part: true
-          }
-        }, function(err, result) {
-          if (err) { return callback(err); }
+        // view all spaces, with remove button
+        async.eachSeries(_creature.spaces, function(spaceID, callback) {
 
-          // append rendered space to dom
-          $('#in-spaces-nav').append('<li>' + result + '</li>');
-          callback(null);
-        });
-        }
+          async.series([
+            // append this space's view
+            // TODO: make this use async
+            function (callback) {
+              space.view.index.present({
+                data: {
+                  id: spaceID,
+                  action: 'get',
+                  depth: 'min'
+                },
+                layout: false
+              }, function(err, result) {
+                if (err) { return callback(err); }
+                // append rendered space to dom
+                $('#in-spaces-nav').append('<li>' + result + '</li>');
+                callback(null);
+              });
+            },
+
+            function (callback) {
+              // append this space's remove button
+              space.view.index.present({
+                data: {
+                  id: spaceID,
+                  action: 'remove',
+                  resourceid: _creature.id,
+                  resourceName: 'creature',
+                  redirect: options.request.url,
+                  depth: 'min'
+                },
+                layout: false
+              }, function(err, result) {
+                if (err) { return callback(err); }
+                // append rendered remove button to dom
+                $('#in-spaces-nav').append('<li>' + result + '</li>');
+                callback(null);
+              });
+
+          // series callback
+          }], callback);
+
+        // each callback
+        }, callback);
+      }
     },
 
     // add form to add new spaces
     function(callback) {
-      space.view.create.index.present({
+      space.view.index.present({
         data: {
+          action: 'create',
           depth: 'min'
-        }
+        },
+        layout: false
       }, function(err, result) {
         if (err) { return callback(err); }
         $('#in-spaces-nav').append(result);

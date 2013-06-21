@@ -8,7 +8,7 @@ module['exports'] = function(options, callback) {
   var $ = this.$;
 
   // get the space we are viewing
-  space.get(options.id, function (err, _space) {
+  space.get(options.data.id, function (err, _space) {
 
     // add space name
     $('.spaceID').html(_space.id);
@@ -21,11 +21,13 @@ module['exports'] = function(options, callback) {
       async.each(_space.resources[resourceName], function(resourceID, callback) {
 
         // view the resource instance
-        // TODO be able to set 'depth' of get
-        _resource.view.get.min.present({
+        _resource.view.index.present({
           data: {
-            id: resourceID
-          }
+            id: resourceID,
+            action: 'get',
+            depth: 'min'
+          },
+          layout: false
         }, function(err, result) {
           if (err) { return callback(err); }
           // append to dom

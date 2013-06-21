@@ -15,7 +15,7 @@ module['exports'] = function(options, callback) {
 
     $.root().html(html.render({
       'creatureName': creatureInst.name,
-      'creatureName.href': "creature?id=" + creatureInst.id
+      'creatureName.href': "/creature?id=" + creatureInst.id
     }, self.template));
 
     callback(null, $.html());
