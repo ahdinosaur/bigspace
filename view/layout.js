@@ -75,7 +75,7 @@ module['exports'] = function(options, callback) {
     function(callback) {
       // if session does not yet have a creature, generate a random one
       if (typeof session.creatureID === 'undefined') {
-        var creatureName = Faker.Name.lastName();
+        var creatureName = Faker.Name.firstName() + " " + Faker.Name.lastName();
         creature.create({
           'name': creatureName,
           'description': Faker.Lorem.sentence()
