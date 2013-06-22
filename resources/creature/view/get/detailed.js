@@ -25,7 +25,7 @@ module['exports'] = function(options, callback) {
     space.view.get.index.present({
       data: {
         id: creatureInst.spaces,
-        depth: 'min'
+        type: 'min'
       }
     }, function(err, result) {
       if (err) { return callback(err); }

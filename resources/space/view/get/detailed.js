@@ -26,7 +26,7 @@ module['exports'] = function(options, callback) {
           data: {
             id: resourceID,
             action: 'get',
-            depth: 'min'
+            type: 'min'
           },
           layout: false
         }, function(err, result) {

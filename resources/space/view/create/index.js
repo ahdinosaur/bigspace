@@ -22,9 +22,9 @@ module['exports'] = function(options, callback) {
 
   // else just get the create view
   } else {
-    // determine what view depth is desired, default to detailed
-    var depth = options.data.depth || 'detailed';
-    space.view.create[depth].present(options, function(err, result) {
+    // determine what view type is desired, default to detailed
+    var type = options.data.type || 'detailed';
+    space.view.create[type].present(options, function(err, result) {
       if (err) { callback(err); }
       callback(null, result);
     });

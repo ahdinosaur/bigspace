@@ -16,8 +16,7 @@ module['exports'] = function(options, callback) {
     // if we are removing the space we are currently viewing, redirect to space index
     var currentSpaceID = url.parse(redirect, true).query.id;
     if (currentSpaceID === spaceID) {
-      // TODO: redirect to /space
-      redirect = '/';
+      redirect = '/space';
     }
 
     // get our space
@@ -38,9 +37,9 @@ module['exports'] = function(options, callback) {
 
   // else just get the remove view
   } else {
-    // determine what view depth is desired, default to detailed
-    var depth = options.data.depth || 'detailed';
-    space.view.remove[depth].present(options, function(err, result) {
+    // determine what view type is desired, default to detailed
+    var type = options.data.type || 'detailed';
+    space.view.remove[type].present(options, function(err, result) {
       if (err) { callback(err); }
       callback(null, result);
     });

@@ -57,7 +57,7 @@ module['exports'] = function(options, callback) {
               data: {
                 id: spaces,
                 action: 'get',
-                depth: 'min'
+                type: 'min'
               },
               layout: false
 
@@ -108,7 +108,7 @@ module['exports'] = function(options, callback) {
         data: {
           id: _creature.id,
           action: 'get',
-          depth: 'min'
+          type: 'min'
         },
         layout: false
       }, function(err, result) {
@@ -137,7 +137,7 @@ module['exports'] = function(options, callback) {
                 data: {
                   id: spaceID,
                   action: 'get',
-                  depth: 'min'
+                  type: 'min'
                 },
                 layout: false
               }, function(err, result) {
@@ -157,7 +157,7 @@ module['exports'] = function(options, callback) {
                   resourceid: _creature.id,
                   resourceName: 'creature',
                   redirect: options.request.url,
-                  depth: 'min'
+                  type: 'min'
                 },
                 layout: false
               }, function(err, result) {
@@ -180,7 +180,7 @@ module['exports'] = function(options, callback) {
       space.view.index.present({
         data: {
           action: 'create',
-          depth: 'min'
+          type: 'min'
         },
         layout: false
       }, function(err, result) {

@@ -122,7 +122,7 @@ function add(options, callback) {
       // if space doesn't have resourceID, add it
       } else if (_space.resources[resourceClass.name].indexOf(resourceID) === -1) {
         logger.info('adding', resourceClass.name, resourceID, 'to space', spaceID);
-        _space.resources[resourceClass.name].add(resourceID);
+        _space.resources[resourceClass.name].push(resourceID);
       }
       _space.save(function(err, _space) {
         if (err) { return callback(err); }

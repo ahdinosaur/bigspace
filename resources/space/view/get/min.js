@@ -10,8 +10,10 @@ module['exports'] = function(options, callback) {
       space = resource.use('space');
 
   // if given a single id, turn it into an array for consistent typing
-  // TODO: should this handle the case of an undefined ID?
-  // TODO: make it so this can handle a single space / array of spaces as well
+  // TODO: this should handle the case of an undefined
+  // TODO: make it so this can handle a single space instance 
+  //       or array of space instances as well
+  // for the above, consider changing data.id to data.space
   var spaceIDs = options.data.id;
   if (typeof spaceIDs !== 'array' && typeof spaceIDs === 'string') {
     spaceIDs = [spaceIDs];
@@ -27,14 +29,14 @@ module['exports'] = function(options, callback) {
       // render and append this space
       $.root().append(html.render({
         'spaceID': '#' + spaceInst.id,
-        'spaceID.href': "/space?id=" + spaceInst.id
+        'spaceID.href': "/space?id=" + spaceInst.id + '&action=get'
       }, self.template));
 
-      callback(null);
+      return callback(null);
     });
   }, function(err) {
     if (err) { return callback(err); }
 
-    callback(null, $.html());
+    return callback(null, $.html());
   });
 };
