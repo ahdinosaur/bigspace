@@ -1,18 +1,18 @@
 [submodule "resources/thing"]
 	path = resources/thing
-	url = git@github.com/erobit/thing.git
+	url = git@github.com:erobit/thing.git
 [submodule "resources/user"]
 	path = resources/user
-	url = git@github.com/ahdinosaur/user.git
+	url = git@github.com:ahdinosaur/user.git
 [submodule "resources/auth"]
 	path = resources/auth
-	url = git@github.com/ahdinosaur/auth.git
+	url = git@github.com:ahdinosaur/auth.git
 [submodule "resources/auth-browserid"]
 	path = resources/auth-browserid
-	url = git@github.com/ahdinosaur/auth-browserid.git
+	url = git@github.com:ahdinosaur/auth-browserid.git
 [submodule "resources/auth-github"]
 	path = resources/auth-github
-	url = git@github.com/ahdinosaur/auth-github.git
+	url = git@github.com:ahdinosaur/auth-github.git
 [submodule "resources/auth-google-oauth"]
 	path = resources/auth-google-oauth
-	url = git@github.com/ahdinosaur/auth-google-oauth.git
+	url = git@github.com:ahdinosaur/auth-google-oauth.git
