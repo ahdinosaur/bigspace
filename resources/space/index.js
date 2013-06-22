@@ -11,7 +11,7 @@ function start(options, callback) {
   // .view() convention
   var view = resource.use('view');
   view.create({ path: __dirname + '/view' }, function(err, _view) {
-    if (err) { callback(err); }
+    if (err) { return callback(err); }
 
     space.view = _view;
 
@@ -29,7 +29,7 @@ function start(options, callback) {
       });
     }
 
-    callback(null);
+    return callback(null);
   });
 }
 space.method('start', start, {
@@ -168,7 +168,7 @@ function add(options, callback) {
     }],
     function(err, result) {
       if (err) { return callback(err); }
-      callback(null, result);
+      return callback(null, result);
     });
 }
 space.method('add', add, {

@@ -33,18 +33,18 @@ module['exports'] = function(options, callback) {
           if (err) { return callback(err); }
           // append to dom
           $('.spaceResources').append('<li>' + result + '</li>');
-          callback(null);
+          return callback(null);
         });
 
       // end instance each
       }, function(err) {
-        callback(err);
+        return callback(err);
       });
 
     // end class each
     }, function(err) {
       if (err) { return callback(err); }
-      callback(null, $.html());
+      return callback(null, $.html());
     });
   });
 };

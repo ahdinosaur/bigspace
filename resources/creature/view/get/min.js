@@ -18,6 +18,6 @@ module['exports'] = function(options, callback) {
       'creatureName.href': "/creature?id=" + creatureInst.id
     }, self.template));
 
-    callback(null, $.html());
+    return callback(null, $.html());
   });
 };

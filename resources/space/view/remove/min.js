@@ -35,11 +35,11 @@ module['exports'] = function(options, callback) {
           '&redirect=' + redirect +'&run=true'
       }, self.template));
 
-      callback(null);
+      return callback(null);
     });
   }, function(err) {
     if (err) { return callback(err); }
 
-    callback(null, $.html());
+    return callback(null, $.html());
   });
 };

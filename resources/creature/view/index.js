@@ -19,9 +19,9 @@ module['exports'] = function(options, callback) {
 
     if (options.layout !== false) {
       $('#main').html(result);
-      callback(null, $.html());
+      return callback(null, $.html());
     } else {
-      callback(null, result);
+      return callback(null, result);
     }
   });
 };

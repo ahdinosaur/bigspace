@@ -34,7 +34,7 @@ module['exports'] = function(options, callback) {
       $('.creatureSpaces').append('<li>' + result + '</li>');
 
       // return
-      callback(null, $.html());
+      return callback(null, $.html());
     });
   });
 };

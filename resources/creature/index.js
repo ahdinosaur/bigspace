@@ -15,9 +15,9 @@ function start(options, callback) {
     function(callback) {
       var view = resource.use('view');
       view.create({ path: __dirname + '/view' }, function(err, _view) {
-          if (err) { callback(err); }
+          if (err) { return callback(err); }
           creature.view = _view;
-          callback(null);
+          return callback(null);
       });
     },
     // add creatures property to user resource
@@ -33,7 +33,7 @@ function start(options, callback) {
         default: []
       });
       user.persist('memory');
-      callback(null);
+      return callback(null);
     }], callback);
 }
 creature.method('start', start, {

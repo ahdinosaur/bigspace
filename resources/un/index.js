@@ -23,7 +23,7 @@ function start(options, callback) {
 
     http.app.use(view.middle({view: _view}));
 
-    callback(null);
+    return callback(null);
   });
 }
 un.method('start', start, {

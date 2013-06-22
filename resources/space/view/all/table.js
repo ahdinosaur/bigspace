@@ -35,14 +35,14 @@ module['exports'] = function(options, callback) {
           'numCreatures': _space.resources.creature.length
         }, tmpl));
 
-        callback(null);
+        return callback(null);
       });
     },
 
     // async each callback
     function(err) {
       if (err) { return callback(err); }
-      callback(null, $.html());
+      return callback(null, $.html());
     });
   });
 };

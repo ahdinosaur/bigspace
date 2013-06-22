@@ -20,6 +20,6 @@ module['exports'] = function(options, callback) {
     //$('#id').remove();
     //$('#spaces').remove();
 
-    callback(null, $.html());
+    return callback(null, $.html());
   });
 };
