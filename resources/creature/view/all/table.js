@@ -1,5 +1,5 @@
 var resource = require('resource'),
-    space = resource.use('space'),
+    creature = resource.use('creature'),
     async = require('async'),
     html = require('html-lang'),
     logger = resource.logger;
@@ -9,16 +9,16 @@ module['exports'] = function(options, callback) {
   var $ = this.$;
 
   // TODO make this have more data, maybe count other resources too?
-  // for each space, add the id and total creature-count to the table
-  space.all(function(err, spaces) {
+  // for each creature, add the name, description, and total spaces-count to the table
+  creature.all(function(err, creatures) {
     if (err) { return callback(err); }
 
-    async.each(spaces, function(_space, callback) {
+    async.each(creatures, function(_creature, callback) {
 
-      // get table-row view of the space
-      space.view.index.present({
+      // get table-row view of the creature
+      creature.view.index.present({
         data: {
-          id: _space.id,
+          id: _creature.id,
           action: 'get',
           type: 'table-row'
         },

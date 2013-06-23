@@ -10,8 +10,8 @@ module['exports'] = function(options, callback) {
   //  console.log(user.creatures);
   //}
 
-  // determine desired action of view, default to get
-  var action = options.data.action || 'get';
+  // determine desired action of view, default to all
+  var action = options.data.action || 'all';
   creature.view[action].index.present(options, function(err, result) {
 
     // display errors on layout
