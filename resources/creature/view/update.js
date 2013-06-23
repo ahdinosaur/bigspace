@@ -13,7 +13,7 @@ module['exports'] = function(options, callback) {
     method: 'update',
     id: options.data.id
   }, function(err, result) {
-    if (err) { throw err; }
+    if (err) { return callback(err); }
     $('.creature').html(result);
 
     // remove forms of fields which should remain unmodified
