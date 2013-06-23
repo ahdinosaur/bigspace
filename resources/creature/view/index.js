@@ -2,6 +2,7 @@ var resource = require('resource'),
     logger = resource.logger;
 
 module['exports'] = function(options, callback) {
+
   var $ = this.$,
       creature = resource.use('creature');
 

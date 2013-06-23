@@ -48,7 +48,7 @@ module['exports'] = function(options, callback) {
         // retrieve each space id, then render them all
         async.map(spaces,
           function(_space, callback) {
-              callback(null, _space.id);
+              return callback(null, _space.id);
 
           // render spaces
           }, function(err, spaces) {
@@ -65,7 +65,7 @@ module['exports'] = function(options, callback) {
             }, function(err, result) {
               if (err) { return callback(err); }
               $('#all-spaces-nav').append(result);
-              callback(null);
+              return callback(null);
             });
         });
       });
@@ -88,7 +88,7 @@ module['exports'] = function(options, callback) {
       // if session has a creature
       } else {
         // use it
-        callback(null, session.creatureID);
+        return callback(null, session.creatureID);
       }
     },
 
@@ -117,7 +117,7 @@ module['exports'] = function(options, callback) {
         // append current creature as a button
         $('#top-menu').append('<li>' + result + '</li>');
       });
-      callback(null, _creature);
+      return callback(null, _creature);
     },
 
     //
@@ -144,7 +144,7 @@ module['exports'] = function(options, callback) {
                 if (err) { return callback(err); }
                 // append rendered space to dom
                 $('#in-spaces-nav').append('<li>' + result + '</li>');
-                callback(null);
+                return callback(null);
               });
             },
 
@@ -164,7 +164,7 @@ module['exports'] = function(options, callback) {
                 if (err) { return callback(err); }
                 // append rendered remove button to dom
                 $('#in-spaces-nav').append('<li>' + result + '</li>');
-                callback(null);
+                return callback(null);
               });
 
           // series callback
@@ -194,7 +194,6 @@ module['exports'] = function(options, callback) {
 
       // display errors on layout
       if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
-
-      callback(null, $.html());
+      return callback(null, $.html());
     });
 };
