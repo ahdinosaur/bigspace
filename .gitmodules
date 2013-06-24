@@ -18,4 +18,4 @@
 	url = git@github.com:ahdinosaur/auth-google-oauth.git
 [submodule "resources/github"]
 	path = resources/github
-	url = git://github.com/ahdinosaur/github.git
+	url = git@github.com:ahdinosaur/github.git
