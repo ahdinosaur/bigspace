@@ -186,7 +186,6 @@ module['exports'] = function(options, callback) {
         $('#in-spaces-nav').append(result);
         return callback(null);
       });
-
     }],
     function (err) {
 
