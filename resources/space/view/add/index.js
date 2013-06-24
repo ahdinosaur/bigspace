@@ -1,9 +1,8 @@
-var resource = require('resource'),
-    space = resource.use('space'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
-  var $ = this.$;
+
+  var $ = this.$,
+      resource = require('resource'),
+      space = resource.use('space');
 
   // if add is to be run, run it
   if (options.data.run === 'true') {

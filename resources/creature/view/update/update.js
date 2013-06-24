@@ -1,11 +1,8 @@
-var resource = require('resource'),
-    logger = resource.logger,
-    async = require('async'),
-    html = require('html-lang'),
-    forms = resource.use('forms');
-
 module['exports'] = function(options, callback) {
-  var $ = this.$;
+
+  var $ = this.$,
+      resource = require('resource'),
+      forms = resource.use('forms');
 
   // generate creature update forms
   forms.generate({

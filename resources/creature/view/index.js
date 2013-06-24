@@ -1,8 +1,7 @@
-var resource = require('resource'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
+
   var $ = this.$,
+      resource = require('resource'),
       creature = resource.use('creature');
 
   //var user = options.request.user;

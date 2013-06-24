@@ -1,14 +1,20 @@
-var resource = require('resource'),
-    logger = resource.logger,
-    async = require('async'),
-    html = require('html-lang'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
 
-  var $ = this.$;
+  var $ = this.$,
+      resource = require('resource'),
+      space = resource.use('space');
 
-  // TODO present an informative index of all the spaces
+  // present an informative index of all the spaces
+  space.view.index.present({
+    data: {},
+    layout: false
+  },
+  function(err, result) {
 
-  callback(null, $.html());
+    // this should never error because the space index should handle it first
+    if (err) { throw err; }
+
+    $('#main').html(result);
+    return callback(null, $.html());
+  });
 };

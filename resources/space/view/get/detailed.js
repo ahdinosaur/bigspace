@@ -1,11 +1,9 @@
-var resource = require('resource'),
-    space = resource.use('space'),
-    async = require('async'),
-    html = require('html-lang'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
-  var $ = this.$;
+
+  var $ = this.$,
+      resource = require('resource'),
+      space = resource.use('space'),
+      async = require('async');
 
   // get the space we are viewing
   space.get(options.data.id, function (err, _space) {
