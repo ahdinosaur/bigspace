@@ -5,8 +5,6 @@ module['exports'] = function(options, callback) {
       space = resource.use('space'),
       creature = resource.use('creature');
 
-  console.log("sadf");
-
   // if create is to be run, run it
   if (options.data.run === 'true') {
 
@@ -14,8 +12,6 @@ module['exports'] = function(options, callback) {
         creatureID = options.request.session.creatureID,
         redirect =
           encodeURIComponent('/space/get/' + spaceID);
-
-    console.log(redirect);
 
     options.response.redirect(
       'space/add?id=' + spaceID +
