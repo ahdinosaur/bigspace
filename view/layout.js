@@ -51,11 +51,9 @@ module['exports'] = function(options, callback) {
           // render spaces
           }, function(err, spaces) {
             if (err) { return callback(err); }
-            space.view.index.present({
+            space.view.get.min.present({
               data: {
-                id: spaces,
-                action: 'get',
-                type: 'min'
+                id: spaces
               },
               layout: false
 
@@ -102,11 +100,9 @@ module['exports'] = function(options, callback) {
     function(_creature, callback) {
 
       // get view of this creature
-      creature.view.index.present({
+      creature.view.get.min.present({
         data: {
-          id: _creature.id,
-          action: 'get',
-          type: 'min'
+          id: _creature.id
         },
         layout: false
       }, function(err, result) {
@@ -131,11 +127,9 @@ module['exports'] = function(options, callback) {
           async.series([
             // append this space's view
             function (callback) {
-              space.view.index.present({
+              space.view.get.min.present({
                 data: {
-                  id: spaceID,
-                  action: 'get',
-                  type: 'min'
+                  id: spaceID
                 },
                 layout: false
               }, function(err, result) {
@@ -148,14 +142,12 @@ module['exports'] = function(options, callback) {
 
             function (callback) {
               // append this space's remove button
-              space.view.index.present({
+              space.view.remove.min.present({
                 data: {
                   id: spaceID,
-                  action: 'remove',
                   resourceid: _creature.id,
                   resourceName: 'creature',
-                  redirect: options.request.url,
-                  type: 'min'
+                  redirect: options.request.url
                 },
                 layout: false
               }, function(err, result) {
@@ -175,11 +167,7 @@ module['exports'] = function(options, callback) {
 
     // add form to add new spaces
     function(callback) {
-      space.view.index.present({
-        data: {
-          action: 'create',
-          type: 'min'
-        },
+      space.view.create.min.present({
         layout: false
       }, function(err, result) {
         if (err) { return callback(err); }

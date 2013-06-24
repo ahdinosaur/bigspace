@@ -28,7 +28,7 @@ module['exports'] = function(options, callback) {
       // render and append this space's remove button
       $.root().append(html.render({
         'addToSpace': '+',
-        'addToSpace.href': 'space/add?id=' + spaceInst.id +
+        'addToSpace.href': '/space/add?id=' + spaceInst.id +
           '&resourceid=' + resourceID + '&resourceName=' + resourceName +
           '&redirect=' + redirect +'&run=true'
       }, self.template));

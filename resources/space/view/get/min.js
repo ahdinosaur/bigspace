@@ -27,7 +27,7 @@ module['exports'] = function(options, callback) {
       // render and append this space
       $.root().append(html.render({
         'spaceID': '#' + spaceInst.id,
-        'spaceID.href': "/space?id=" + spaceInst.id + '&action=get'
+        'spaceID.href': "/space/get/" + spaceInst.id
       }, self.template));
 
       return callback(null);

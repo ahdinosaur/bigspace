@@ -24,9 +24,14 @@ module['exports'] = function(options, callback) {
     function(err, result) {
       if (err) { return callback(err); }
 
+      var numCreatures = 0;
+      if (typeof spaceInst.resources.creature !== 'undefined') {
+        numCreatures = spaceInst.resources.creature.length;
+      }
+
       $.root().html(html.render({
         'spaceMin': result,
-        'numCreatures': spaceInst.resources.creature.length
+        'numCreatures': numCreatures
       }, self.template));
 
       return callback(null, $.html());

@@ -6,8 +6,17 @@ module['exports'] = function(options, callback) {
       async = require('async'),
       html = require('html-lang'),
       creature = resource.use('creature'),
+      forms = resource.use('forms'),
       space = resource.use('space');
 
+  forms.generate({
+    resource: 'creature',
+    method: 'get',
+    id: options.data.id
+  }, function(err, result) {
+    return callback(err, result);
+  });
+  /*
   // get the creature we are viewing
   creature.get(options.data.id, function(err, creatureInst) {
     if (err) { return callback(err); }
@@ -35,4 +44,5 @@ module['exports'] = function(options, callback) {
       return callback(null, $.html());
     });
   });
+*/
 };
