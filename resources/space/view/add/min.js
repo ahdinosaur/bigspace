@@ -1,9 +1,3 @@
-var resource = require('resource'),
-    async = require('async'),
-    html = require('html-lang'),
-    space = resource.use('space'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
 
   // if given a single id, turn it into an array for consistent typing
@@ -11,6 +5,10 @@ module['exports'] = function(options, callback) {
   // TODO: make it so this can handle a single space / array of spaces as well
   var $ = this.$,
       self = this,
+      resource = require('resource'),
+      async = require('async'),
+      html = require('html-lang'),
+      space = resource.use('space'),
       spaceIDs = options.data.id,
       resourceID = options.data.resourceid,
       redirect = options.data.redirect,

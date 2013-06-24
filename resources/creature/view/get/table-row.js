@@ -1,14 +1,11 @@
-var resource = require('resource'),
-    creature = resource.use('creature'),
-    space = resource.use('space'),
-    async = require('async'),
-    html = require('html-lang'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
 
   var $ = this.$,
       self = this,
+      resource = require('resource'),
+      creature = resource.use('creature'),
+      space = resource.use('space'),
+      async = require('async'),
       creatureID = options.data.id;
 
   // get the creature we are viewing

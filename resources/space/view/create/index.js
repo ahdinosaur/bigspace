@@ -1,10 +1,9 @@
-var resource = require('resource'),
-    space = resource.use('space'),
-    creature = resource.use('creature'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
+
   var $ = this.$;
+      resource = require('resource'),
+      space = resource.use('space'),
+      creature = resource.use('creature');
 
   // if create is to be run, run it
   if (options.data.run === 'true') {

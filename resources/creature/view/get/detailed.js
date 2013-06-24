@@ -1,12 +1,10 @@
-var resource = require('resource'),
-    async = require('async'),
-    html = require('html-lang'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
 
   var $ = this.$,
       self = this,
+      resource = require('resource'),
+      async = require('async'),
+      html = require('html-lang'),
       creature = resource.use('creature'),
       space = resource.use('space');
 

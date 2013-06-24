@@ -1,14 +1,12 @@
-var resource = require('resource'),
-    async = require('async'),
-    html = require('html-lang'),
-    Faker = require('Faker'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
-  var space = resource.use('space'),
-      creature = resource.use('creature');
 
-  var $ = this.$;
+  var $ = this.$,
+      resource = require('resource'),
+      async = require('async'),
+      html = require('html-lang'),
+      Faker = require('Faker'),
+      space = resource.use('space'),
+      creature = resource.use('creature');
 
   var session = options.request.session || {};
   async.waterfall([

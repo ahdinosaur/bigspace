@@ -1,12 +1,9 @@
-var resource = require('resource'),
-    creature = resource.use('creature'),
-    async = require('async'),
-    html = require('html-lang'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
 
-  var $ = this.$;
+  var $ = this.$,
+      resource = require('resource'),
+      creature = resource.use('creature'),
+      async = require('async');
 
   // TODO make this have more data, maybe count other resources too?
   // for each creature, add the name, description, and total spaces-count to the table

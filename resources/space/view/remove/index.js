@@ -1,10 +1,9 @@
-var resource = require('resource'),
-    url = require('url'),
-    space = resource.use('space'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
+
   var $ = this.$;
+      resource = require('resource'),
+      url = require('url'),
+      space = resource.use('space');
 
   // if remove is to be run, run it
   if (options.data.run === 'true') {

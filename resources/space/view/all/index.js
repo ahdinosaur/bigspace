@@ -1,9 +1,7 @@
-var resource = require('resource'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
 
   var $ = this.$,
+      resource = require('resource'),
       space = resource.use('space');
 
   // determine what view type is desired, default to table

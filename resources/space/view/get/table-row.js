@@ -1,12 +1,10 @@
-var resource = require('resource'),
-    space = resource.use('space'),
-    html = require('html-lang'),
-    logger = resource.logger;
-
 module['exports'] = function(options, callback) {
 
   var $ = this.$,
       self = this,
+      resource = require('resource'),
+      space = resource.use('space'),
+      html = require('html-lang'),
       spaceID = options.data.id;
 
   // get the space we are viewing

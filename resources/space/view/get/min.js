@@ -1,12 +1,10 @@
-var resource = require('resource'),
-    async = require('async'),
-    html = require('html-lang'),
-    fs = require('fs');
-
 module['exports'] = function(options, callback) {
 
-  var $ = this.$.load(''), // start with an empty dom
+  var $ = this.$.load(''), // start with an empty dom so we can append to it
       self = this,
+      resource = require('resource'),
+      async = require('async'),
+      html = require('html-lang'),
       space = resource.use('space');
 
   // if given a single id, turn it into an array for consistent typing
@@ -34,9 +32,10 @@ module['exports'] = function(options, callback) {
 
       return callback(null);
     });
+
+  // async.each's callback
   }, function(err) {
     if (err) { return callback(err); }
-
     return callback(null, $.html());
   });
 };
