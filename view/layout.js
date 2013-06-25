@@ -33,39 +33,6 @@ module['exports'] = function(options, callback) {
       }
       return callback(null);
     },
-    //
-    // all-spaces nav
-    //
-    function(callback) {
-
-      // TODO: update the following once we can pass spaces into space.view.get.min
-      // get all spaces
-      space.all(function(err, spaces) {
-        if (err) { return callback(err); }
-
-        // retrieve each space id, then render them all
-        async.map(spaces,
-          function(_space, callback) {
-              return callback(null, _space.id);
-
-          // render spaces
-          }, function(err, spaces) {
-            if (err) { return callback(err); }
-            space.view.get.min.present({
-              data: {
-                id: spaces
-              },
-              layout: false
-
-            // append rendered spaces to dom
-            }, function(err, result) {
-              if (err) { return callback(err); }
-              $('#all-spaces-nav').append(result);
-              return callback(null);
-            });
-        });
-      });
-    },
 
     // get creatureID in session
     function(callback) {
@@ -96,6 +63,26 @@ module['exports'] = function(options, callback) {
     //
     // top menu
     //
+    // make index button
+    function(_creature, callback) {
+
+      // for each resource,
+      async.each(['space','creature'],
+
+        // append to the dropdown a link to that resource's index page
+        function(resourceName, callback) {
+          $('#resourceIndexes').append('<li><a href="/' + resourceName + '">' +
+            resourceName + '</a></li>');
+          return callback(null);
+        },
+
+        // return dom
+        function(err) {
+          if (err) { return callback(err); }
+          return callback(null, _creature);
+        });
+    },
+
     // make creature buttons
     function(_creature, callback) {
 
