@@ -6,14 +6,10 @@ module['exports'] = function(options, callback) {
       r = resource.use(rName);
 
   // present an informative index of all the spaces
-  r.view.index.present({
-    data: {},
-    layout: false
-  },
-  function(err, result) {
+  r.view.index.present(options, function(err, result) {
 
-    // this should never error because the space index should handle it first
-    if (err) { throw err; }
+    // display errors on layout
+    if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
 
     $('#main').html(result);
 

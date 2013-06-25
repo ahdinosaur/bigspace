@@ -11,7 +11,7 @@ module['exports'] = function(options, callback) {
     var spaceID = options.data.id,
         creatureID = options.request.session.creatureID,
         redirect =
-          encodeURIComponent('/space/get/' + spaceID);
+          encodeURIComponent('/space/get?id=' + spaceID);
 
     options.response.redirect(
       'space/add?id=' + spaceID +

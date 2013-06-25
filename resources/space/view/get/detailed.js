@@ -48,13 +48,10 @@ module['exports'] = function(options, callback) {
           async.each(_space.resources[resourceName], function(resourceID, callback) {
 
             // view the resource instance
-            _resource.view.index.present({
+            _resource.view.get.min.present({
               data: {
-                id: resourceID,
-                action: 'get',
-                type: 'min'
-              },
-              layout: false
+                id: resourceID
+              }
             }, function(err, result) {
               if (err) { return callback(err); }
               // append to dom

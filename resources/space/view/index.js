@@ -8,10 +8,9 @@ module['exports'] = function(options, callback) {
   var action = options.data.action || 'all';
   space.view[action].index.present(options, function(err, result) {
 
-    // display errors on layout
-    if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+    if (err) { return callback(err); }
 
-    if (options.layout !== false) {
+    if (options.layout) {
       $('#main').html(result);
       return callback(null, $.html());
     } else {

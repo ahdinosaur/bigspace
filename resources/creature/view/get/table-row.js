@@ -13,13 +13,10 @@ module['exports'] = function(options, callback) {
     if (err) { return callback(err); }
 
     // get min of the creature
-    creature.view.index.present({
+    creature.view.get.min.present({
       data: {
-        id: creatureID,
-        action: 'get',
-        type: 'min'
-      },
-      layout: false
+        id: creatureID
+      }
     },
 
     function(err, result) {
@@ -33,13 +30,10 @@ module['exports'] = function(options, callback) {
       async.each(creatureInst.spaces, function(spaceID, callback) {
 
         // get min view of the space
-        space.view.index.present({
+        space.view.get.min.present({
           data: {
-            id: spaceID,
-            action: 'get',
-            type: 'min'
-          },
-          layout: false
+            id: spaceID
+          }
         },
 
         // append rendered space to template

@@ -12,13 +12,10 @@ module['exports'] = function(options, callback) {
     if (err) { return callback(err); }
 
     // get min of the space
-    space.view.index.present({
+    space.view.get.min.present({
       data: {
-        id: spaceID,
-        action: 'get',
-        type: 'min'
-      },
-      layout: false
+        id: spaceID
+      }
     },
     // place rendered space in the row
     function(err, result) {

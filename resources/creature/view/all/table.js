@@ -13,13 +13,10 @@ module['exports'] = function(options, callback) {
     async.each(creatures, function(_creature, callback) {
 
       // get table-row view of the creature
-      creature.view.index.present({
+      creature.view.get['table-row'].present({
         data: {
-          id: _creature.id,
-          action: 'get',
-          type: 'table-row'
-        },
-        layout: false
+          id: _creature.id
+        }
       },
 
       // append rendered row to table

@@ -29,9 +29,11 @@ function start(options, callback) {
     //
 
     http.app.get('/', function (req, res, next) {
+
       _view.index.present({
         request: req,
-        response: res
+        response: res,
+        data: req.big.params
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -39,10 +41,12 @@ function start(options, callback) {
     });
 
     http.app.get('/:resource', function (req, res, next) {
+
       _view.index.present({
         resource: req.param('resource'),
         request: req,
-        response: res
+        response: res,
+        data: req.big.params
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -51,13 +55,11 @@ function start(options, callback) {
 
     http.app.get('/:resource/:method', function (req, res, next) {
 
-      var data = req.query;
-
       _view.method.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: data,
-        id: data.id,
+        data: req.big.params,
+        id: req.big.params.id,
         request: req,
         response: res
       }, function(err, str){
@@ -68,13 +70,13 @@ function start(options, callback) {
 
     http.app.post('/:resource/:method', function (req, res, next) {
 
-      var data = req.body;
+      console.log(req.big.params);
 
       _view.method.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: data,
-        id: data.id,
+        data: req.big.params,
+        id: req.big.params.id,
         request: req,
         response: res,
         action: 'post'
@@ -85,16 +87,16 @@ function start(options, callback) {
 
     });
 
-    http.app.get('/:resource/:method/:id', function (req, res, next) {
-      var data = req.query,
-          _id = req.param('id');
-      data.id = _id;
+    // TODO allow for displays to be for nested views
+    // http://stackoverflow.com/questions/14915496/how-can-i-allow-slashes-in-my-express-routes
+    http.app.get('/:resource/:method/:display', function (req, res, next) {
 
       _view.method.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        id: _id,
-        data: data,
+        data: req.big.params,
+        id: req.big.params.id,
+        display: req.param('display'),
         request: req,
         response: res
       }, function(err, str){
@@ -103,20 +105,19 @@ function start(options, callback) {
       });
     });
 
-    http.app.post('/:resource/:method/:id', function (req, res, next) {
-      var data = req.body,
-          _id = req.param('id');
-      data.id = _id;
+    http.app.post('/:resource/:method/:display', function (req, res, next) {
 
       _view.method.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        id: _id,
-        data: data,
+        data: req.big.params,
+        id: req.big.params.id,
+        display: req.param('display'),
         request: req,
         response: res,
         action: 'post'
       }, function(err, str){
+        if (err) { throw err; }
         res.end(str);
       });
 

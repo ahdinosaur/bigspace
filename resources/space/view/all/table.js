@@ -13,13 +13,10 @@ module['exports'] = function(options, callback) {
     async.each(spaces, function(_space, callback) {
 
       // get table-row view of the space
-      space.view.index.present({
+      space.view.get['table-row'].present({
         data: {
-          id: _space.id,
-          action: 'get',
-          type: 'table-row'
-        },
-        layout: false
+          id: _space.id
+        }
       },
 
       // append rendered row to table
