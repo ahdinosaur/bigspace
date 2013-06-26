@@ -21,13 +21,19 @@ module['exports'] = function(options, callback) {
       response: options.response
     }, function(err, result) {
       if (err) { return callback(err); }
-      $.root().append(result);
+      $('ul').append(result);
       return callback(null);
     });
 
   // each callback
   }, function(err) {
     if (err) { return callback(err); }
-    return callback(null, $.html());
+
+    // add form to add new spaces
+    space.view.create.min.present({ }, function(err, result) {
+      if (err) { return callback(err); }
+      $('ul').append('<li>' + result + '</li>');
+      return callback(null, $.html());
+    });
   });
 };

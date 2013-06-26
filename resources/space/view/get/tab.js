@@ -19,6 +19,11 @@ module['exports'] = function(options, callback) {
     currentSpaceID = parsedUrl.query.id;
   }
 
+  // if this space is the currently active space, make its tab an active tab
+  if (currentSpaceID === spaceID) {
+    $('li').addClass('active');
+  }
+
   async.waterfall([
 
     // first get this space's min view
@@ -54,7 +59,8 @@ module['exports'] = function(options, callback) {
         var removeHref = $.load(removeMin)('a').attr('href');
 
         // append modified removeMin inside tab
-        $('a').append('<button>x</button>');
+        $('a').append(
+          '<button class="btn btn-mini" style="margin-left: 8px; padding: 0 4px;">x</button>');
         $('button').attr('id', 'tab-remove' + spaceID);
 
         // add event handlers clicking on get and remove parts of tab

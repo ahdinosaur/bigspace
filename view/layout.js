@@ -126,17 +126,6 @@ module['exports'] = function(options, callback) {
           return callback(null);
         });
       }
-    },
-
-    // add form to add new spaces
-    function(callback) {
-      space.view.create.min.present({
-        layout: false
-      }, function(err, result) {
-        if (err) { return callback(err); }
-        $('#inSpacesNav').append(result);
-        return callback(null);
-      });
     }],
     function (err) {
 
