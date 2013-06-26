@@ -38,14 +38,9 @@ function generate (options, callback) {
   resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, view) {
     var str = '', form;
     form = view.form[options.method] || view.form['method'];
-    form.present(options, function(err, res) {
-      if(err) {
-        throw err;
-      }
-      return callback(err, res);
-    });
+    form.present(options, callback);
   });
-};
+}
 
 // incoming data from an interface such as HTTP form submits come in as strings,
 // so we use the resource schema to coerce string values into the proper JavaScript types

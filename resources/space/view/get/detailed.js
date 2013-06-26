@@ -26,7 +26,6 @@ module['exports'] = function(options, callback) {
               if (err) { return callback(err); }
               // TODO: figure out a cleaner way to do this. redirect is necessary
               //       for the in-spaces nav to contain this new space
-              console.log("current url: ",options.request.url);
               options.response.redirect(options.request.url);
           });
         } else {

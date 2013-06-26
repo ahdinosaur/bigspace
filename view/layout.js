@@ -15,12 +15,14 @@ module['exports'] = function(options, callback) {
     //
     function(callback) {
       var auth = resource.use('auth');
-      auth.view.login.present({anchor: 'right'}, function(err, result) {
+      auth.view.login.present({}, function(err, result) {
         if (err) return callback(err);
         $('#authNav').html(result);
         return callback(null);
       });
     },
+    /*
+    TODO fix for new layout by integrating into authNav
     // add user info if logged in
     function(callback) {
       var user =  options.request.user,
@@ -32,7 +34,7 @@ module['exports'] = function(options, callback) {
         }, tmpl));
       }
       return callback(null);
-    },
+    },*/
 
     // get creatureID in session
     function(callback) {
@@ -66,13 +68,17 @@ module['exports'] = function(options, callback) {
     // make index button
     function(_creature, callback) {
 
+      var tmpl = '<li role="presentation"><a class="resourceIndex" role="menuitem" tabindex="-1" href=""></a></li>';
+
       // for each resource,
       async.each(['space','creature'],
 
         // append to the dropdown a link to that resource's index page
         function(resourceName, callback) {
-          $('#resourceIndexes').append('<li><a href="/' + resourceName + '">' +
-            resourceName + '</a></li>');
+          $('#indexDropItems').append(html.render({
+            'resourceIndex': resourceName,
+            'resourceIndex.href': '/' + resourceName
+          }, tmpl));
           return callback(null);
         },
 
@@ -96,7 +102,7 @@ module['exports'] = function(options, callback) {
         if (err) { return callback(err); }
 
         // append current creature as a button
-        $('#top-menu').append('<li>' + result + '</li>');
+        $('#creaturePageButton').html(result);
       });
       return callback(null, _creature);
     },
@@ -108,47 +114,17 @@ module['exports'] = function(options, callback) {
     function(_creature, callback) {
       if (typeof _creature.spaces !== 'undefined') {
 
-        // view all spaces, with remove button
-        async.eachSeries(_creature.spaces, function(spaceID, callback) {
-
-          async.series([
-            // append this space's view
-            function (callback) {
-              space.view.get.min.present({
-                data: {
-                  id: spaceID
-                },
-                layout: false
-              }, function(err, result) {
-                if (err) { return callback(err); }
-                // append rendered space to dom
-                $('#in-spaces-nav').append('<li>' + result + '</li>');
-                return callback(null);
-              });
-            },
-
-            function (callback) {
-              // append this space's remove button
-              space.view.remove.min.present({
-                data: {
-                  id: spaceID,
-                  resourceid: _creature.id,
-                  resourceName: 'creature',
-                  redirect: options.request.url
-                },
-                layout: false
-              }, function(err, result) {
-                if (err) { return callback(err); }
-                // append rendered remove button to dom
-                $('#in-spaces-nav').append('<li>' + result + '</li>');
-                return callback(null);
-              });
-
-          // series callback
-          }], callback);
-
-        // each callback
-        }, callback);
+        space.view.get.tabs.present({
+          data: {
+            creatureID: _creature.id,
+            spaces: _creature.spaces
+          },
+          request: options.request,
+          response: options.response
+        }, function(err, result) {
+          $('#inSpacesNav').html(result);
+          return callback(null);
+        });
       }
     },
 
@@ -158,7 +134,7 @@ module['exports'] = function(options, callback) {
         layout: false
       }, function(err, result) {
         if (err) { return callback(err); }
-        $('#in-spaces-nav').append(result);
+        $('#inSpacesNav').append(result);
         return callback(null);
       });
     }],

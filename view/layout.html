@@ -10,13 +10,14 @@
     <meta name="description" content="an infinite space of resources">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/cssextras/master/css/cssextras.css">
+    <!--<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/cssextras/master/css/cssextras.css">-->
     <link rel="stylesheet" href="/css/main.css">
 
     <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -24,29 +25,34 @@
     <![endif]-->
 
     <header>
-
-      <!-- auth nav -->
-      <div id="authNav" style="float: right;">
-      </div>
-
-      <!-- index dropdown -->
-      <div id="indexDropdown" class="dropdown dropdown-tip">
-        <ul id="resourceIndexes" class="dropdown-menu">
-        </ul>
-      </div>
-
       <!-- top menu -->
-      <div class='pure-menu pure-menu-open pure-menu-horizontal'>
-        <ul id='top-menu'>
-          <li data-dropdown="#indexDropdown"><a href=''>Index</a></li>
-          <li><a href=''>changeCreature</a></li>
-        </ul>
-      </div>
-      <hr />
+      <div id="top-menu" class="navbar navbar-static">
+        <div class="navbar-inner">
+          <div class="container" style="width: auto;">
+            <a class="brand" href="#">bigspace</a>
+            <ul class="nav" role="navigation">
 
-      <!-- in-spaces menu -->
-      <div id='in-spaces-nav' class='pure-menu pure-menu-open pure-menu-horizontal'></div>
-      <hr />
+              <!-- index dropdown -->
+              <li class="dropdown">
+                <a id="indexDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Index <b class="caret"></b></a>
+                <ul id="indexDropItems" class="dropdown-menu" role="menu" aria-labelledby="indexDrop">
+                </ul>
+              </li> <!--/index dropdown -->
+
+              <!-- creaturePage -->
+              <li id="creaturePageButton"></li> <!--/creaturePage -->
+            </ul>
+
+            <!-- authNav -->
+            <ul id="authNav" class="nav pull-right">
+            </ul> <!-- /authNav -->
+          </div>
+        </div>
+      </div> <!-- /top-menu -->
+
+      <!-- inSpacesNav -->
+      <ul id='inSpacesNav' class="nav nav-tabs">
+      </ul><!-- /inSpacesNav -->
 
       <!-- error bar -->
       <div id='error' class="yui3-alert yui3-alert-error" style="padding: 0px; margin: 0px;">
@@ -56,11 +62,14 @@
     <div id='main'>
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="/css/jquery.dropdown.css" />
-    <script type="text/javascript" src="/js/vendor/jquery.dropdown.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="/css/jquery.dropdown.css" />
+    <script type="text/javascript" src="/js/vendor/jquery.dropdown.js"></script>-->
     <script src="https://login.persona.org/include.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        console.log("hi!");
+      });
+    </script>
   </body>
 </html>
