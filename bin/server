@@ -30,6 +30,9 @@ async.series([
     resource.use('space').start({}, callback);
   },
   function(callback) {
+    resource.use('gist').init({}, callback);
+  },
+  function(callback) {
     resource.use('un').start({path: __dirname + '/../view'}, callback);
   },
   function(callback) {

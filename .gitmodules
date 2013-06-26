@@ -19,3 +19,6 @@
 [submodule "resources/github"]
 	path = resources/github
 	url = git@github.com:ahdinosaur/github.git
+[submodule "resources/gist"]
+	path = resources/gist
+	url = git@github.com:erobit/gist
