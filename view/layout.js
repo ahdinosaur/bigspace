@@ -71,7 +71,8 @@ module['exports'] = function(options, callback) {
       var tmpl = '<li role="presentation"><a class="resourceIndex" role="menuitem" tabindex="-1" href=""></a></li>';
 
       // for each resource,
-      async.each(['space','creature'],
+      // TODO get list of resources intelligently
+      async.each(['space','creature', 'gist'],
 
         // append to the dropdown a link to that resource's index page
         function(resourceName, callback) {
