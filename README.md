@@ -2,7 +2,7 @@
 
 bigspace is an extensible, open source, next-gen social platform.
 
-it acts as an interface to the [big](https://github.com/bigcompany/big) framework by providing virtual spaces (like IRC channels/subreddits) full of easily extensible [resources](https://github.com/bigcompany/resource) that also integrate with existing web platforms.
+it acts as an interface to the [big](https://github.com/bigcompany/big) framework by providing virtual spaces (like IRC channels/subreddits) full of developer-friendly [resources](https://github.com/bigcompany/resource) which also integrate with existing web platforms.
 
 ## how to run
 
