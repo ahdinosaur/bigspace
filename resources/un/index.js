@@ -89,6 +89,7 @@ function start(options, callback) {
 
     // TODO allow for displays handle nested views
     // http://stackoverflow.com/questions/14915496/how-can-i-allow-slashes-in-my-express-routes
+    // ex: /space/all/bubble using http://bl.ocks.org/mbostock/4063269
     http.app.get('/:resource/:method/:display', function (req, res, next) {
 
       _view.method.present({
