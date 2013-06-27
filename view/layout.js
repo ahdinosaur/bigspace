@@ -97,8 +97,7 @@ module['exports'] = function(options, callback) {
       creature.view.get.min.present({
         data: {
           id: _creature.id
-        },
-        layout: false
+        }
       }, function(err, result) {
         if (err) { return callback(err); }
 
