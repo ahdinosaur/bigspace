@@ -23,7 +23,7 @@ module['exports'] = function (options, callback) {
       return viewObj.present.call(viewObj, options, callback);
     };
   } else {
-    delegate = forms.generate;
+    delegate = forms.method;
   }
 
   // now call the delegate we've decided on

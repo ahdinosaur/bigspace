@@ -19,7 +19,13 @@ module['exports'] = function (options, callback) {
   $('#submit').attr('value', options.method);
   $('legend').html(desc);
 
-  if (typeof options.data !== 'undefined') {
+  // TODO do we want to submit only if all
+  //      necessary data is being submitted?
+  //
+  // if there is any data being submitted
+  if (typeof options.data !== 'undefined' &&
+    Object.keys(options.data).length > 0) {
+    // submit the data
     var cb = function (err, result) {
       if (err) {
         if (err.errors) {
@@ -35,9 +41,12 @@ module['exports'] = function (options, callback) {
         $('.result').html(JSON.stringify(result, true, 2));
         return callback(null, $.html());
       }
-    }
+    };
     return resource.invoke(method, options.data, cb);
+
+  // otherwise if there is no data being submitted
   } else {
+    // show the form
     $('.results').remove();
     showForm();
   }
@@ -47,7 +56,8 @@ module['exports'] = function (options, callback) {
     if(typeof method.schema.properties !== 'undefined') {
       var _props = method.schema.properties || {};
 
-      if (method.schema.properties.options && typeof method.schema.properties.options.properties !== 'undefined') {
+      if (method.schema.properties.options &&
+        typeof method.schema.properties.options.properties !== 'undefined') {
         _props = method.schema.properties.options.properties;
       }
 
@@ -60,7 +70,7 @@ module['exports'] = function (options, callback) {
         }
         if(arr.length === 0) {
           $('.inputs').html(output);
-          return callback(null, $.html())
+          return callback(null, $.html());
         }
         var property = arr.pop();
         var input = {};

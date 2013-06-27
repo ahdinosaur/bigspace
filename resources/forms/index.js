@@ -6,8 +6,8 @@ resource.use('html');
 
 forms.schema.description = "for generating HTML forms";
 
-forms.method("generate", generate, {
-  "description": "generates a new form based on a resource schema",
+forms.method("method", method, {
+  "description": "generates a generic view based on a resource method schema",
   "properties": {
     "options": {
       "properties": {
@@ -31,13 +31,14 @@ forms.method("generate", generate, {
   }
 });
 
-function generate (options, callback) {
+function method (options, callback) {
   if (options.data) {
     options.data = coerceTypes(resource[options.resource].schema, options.data);
   }
   resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, view) {
     var str = '', form;
-    form = view.form[options.method] || view.form['method'];
+    //form = view.form[options.method] || view.form['method'];
+    form = view.form['method'];
     form.present(options, callback);
   });
 }
