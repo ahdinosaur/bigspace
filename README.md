@@ -1,3 +1,5 @@
+EXPERIMENTAL
+
 # bigspace
 
 bigspace is an extensible, open source, next-gen social platform.
