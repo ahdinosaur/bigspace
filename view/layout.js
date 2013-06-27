@@ -97,8 +97,7 @@ module['exports'] = function(options, callback) {
       creature.view.get.min.present({
         data: {
           id: _creature.id
-        },
-        layout: false
+        }
       }, function(err, result) {
         if (err) { return callback(err); }
 
@@ -131,7 +130,8 @@ module['exports'] = function(options, callback) {
     function (err) {
 
       // display errors on layout
-      if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+      if (err)
+        $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
       return callback(null, $.html());
     });
 };

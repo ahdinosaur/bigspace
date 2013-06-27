@@ -30,7 +30,8 @@ module['exports'] = function (options, callback) {
   delegate(options, function(err, str) {
 
     // display errors on layout
-    if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+    if (err)
+      $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
 
     // add result of action to layout
     $('#main').html(str);
