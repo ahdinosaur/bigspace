@@ -5,6 +5,8 @@ var resource = require('resource');
 var logger = resource.logger,
     async = require('async');
 
+require('longjohn');
+
 // TODO remove hack by having starts run automatically after .use
 async.series([
   // start config

@@ -22,6 +22,7 @@
     "passport-browserid": "*",
     "async": "*",
     "html-lang": "*",
-    "Faker": "*"
+    "Faker": "*",
+    "longjohn": "*"
   }
 }
