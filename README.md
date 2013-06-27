@@ -3,12 +3,9 @@
 ## how to run
 
 ```
-git clone https://github.com/ahdinosaur/bigspace.git
+git clone https://github.com/ahdinosaur/bigspace.git -b master --recursive
 cd bigspace
-git checkout master # or whatever branch you want
 npm install
-git submodule init
-git submodule update
 node bin/server
-browse to http://localhost:8888/
+browse to http://localhost:8888
 ```
