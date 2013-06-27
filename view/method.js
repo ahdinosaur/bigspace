@@ -9,6 +9,8 @@ module['exports'] = function (options, callback) {
       $ = this.$,
       _view = this;
 
+  // TODO add methods to sidebar
+
   // either delegate to resource view (if exists)
   // or default to using forms
   var delegate;
@@ -31,10 +33,10 @@ module['exports'] = function (options, callback) {
 
     // display errors on layout
     if (err)
-      $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
+      $('#messageBar').append('<pre><code><div class="alert alert-error">' + err.stack + '</div></code></pre>');
 
     // add result of action to layout
-    $('#main').html(str);
+    $('.content').html(str);
 
     // return rendered result with layout
     return callback(null, $.html());
