@@ -9,7 +9,8 @@ module['exports'] = function(options, callback) {
   r.view.index.present(options, function(err, result) {
 
     // display errors on layout
-    if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+    if (err)
+      $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
 
     $('#main').html(result);
 

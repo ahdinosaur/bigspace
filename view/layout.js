@@ -131,7 +131,8 @@ module['exports'] = function(options, callback) {
     function (err) {
 
       // display errors on layout
-      if (err) { $('#error').append('<pre>' + err.stack + '</pre>'); }
+      if (err)
+        $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
       return callback(null, $.html());
     });
 };
