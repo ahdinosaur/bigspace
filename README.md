@@ -1,6 +1,6 @@
-EXPERIMENTAL
-
 # bigspace
+
+### EXPERIMENTAL
 
 bigspace is an extensible, open source, next-gen social platform.
 
