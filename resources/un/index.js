@@ -55,7 +55,7 @@ function start(options, callback) {
 
     http.app.get('/:resource/:method', function (req, res, next) {
 
-      _view.method.present({
+      _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
         data: req.big.params,
@@ -74,7 +74,7 @@ function start(options, callback) {
 
       console.log(req.big.params);
 
-      _view.method.present({
+      _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
         data: req.big.params,
@@ -95,7 +95,7 @@ function start(options, callback) {
     // ex: /space/all/bubble using http://bl.ocks.org/mbostock/4063269
     http.app.get('/:resource/:method/:display', function (req, res, next) {
 
-      _view.method.present({
+      _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
         data: req.big.params,
@@ -113,7 +113,7 @@ function start(options, callback) {
 
     http.app.post('/:resource/:method/:display', function (req, res, next) {
 
-      _view.method.present({
+      _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
         data: req.big.params,
