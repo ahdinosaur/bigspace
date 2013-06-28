@@ -9,34 +9,22 @@ module['exports'] = function(options, callback) {
       async = require('async'),
       html = require('html-lang'),
       space = resource.use('space'),
-      spaceIDs = options.data.id,
+      spaceID = options.data.id,
       resourceID = options.data.resourceid,
       redirect = options.data.redirect,
       resourceName = options.data.resourceName;
 
-  if (typeof spaceIDs !== 'array' && typeof spaceIDs === 'string') {
-    spaceIDs = [spaceIDs];
-  }
-
-  // for each of the given spaceIDs
-  async.each(spaceIDs, function(spaceID, callback) {
-
-    // get the space we are viewing
-    space.get(spaceID, function(err, spaceInst) {
-      if (err) { return callback(err); }
-
-      // render and append this space's remove button
-      $.root().append(html.render({
-        'addToSpace': '+',
-        'addToSpace.href': '/space/add?id=' + spaceInst.id +
-          '&resourceid=' + resourceID + '&resourceName=' + resourceName +
-          '&redirect=' + redirect +'&run=true'
-      }, self.template));
-
-      return callback(null);
-    });
-  }, function(err) {
+  // get the space we are viewing
+  space.get(spaceID, function(err, spaceInst) {
     if (err) { return callback(err); }
+
+    // render and append this space's remove button
+    $.root().append(html.render({
+      'addToSpace': '+',
+      'addToSpace.href': '/space/add?id=' + spaceInst.id +
+        '&resourceid=' + resourceID + '&resourceName=' + resourceName +
+        '&__redirect=' + encodeURIComponent(redirect) +'&__action=post'
+    }, self.template));
 
     return callback(null, $.html());
   });

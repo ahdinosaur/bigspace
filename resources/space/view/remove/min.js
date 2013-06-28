@@ -8,35 +8,30 @@ module['exports'] = function(options, callback) {
       resource = require('resource'),
       async = require('async'),
       html = require('html-lang'),
+      url = require('url'),
       space = resource.use('space'),
-      spaceIDs = options.data.id,
-      resourceID = options.data.resourceid,
-      redirect = options.data.redirect,
-      resourceName = options.data.resourceName;
+      spaceID = options.data.spaceID,
+      resourceID = options.data.resourceID,
+      resourceName = options.data.resource,
+      redirect = options.request.url;
 
-  if (typeof spaceIDs !== 'array' && typeof spaceIDs === 'string') {
-    spaceIDs = [spaceIDs];
+  // if we are removing the space we are currently viewing, redirect to space index
+  var currentSpaceID = url.parse(redirect, true).query.id;
+  if (currentSpaceID === spaceID) {
+    redirect = '/space';
   }
 
-  // for each of the given spaceIDs
-  async.each(spaceIDs, function(spaceID, callback) {
-
-    // get the space we are viewing
-    space.get(spaceID, function(err, spaceInst) {
-      if (err) { return callback(err); }
-
-      // render and append this space's remove button
-      $.root().html(html.render({
-        'removeFromSpace': 'x',
-        'removeFromSpace.href': '/space/remove?id=' + spaceInst.id +
-          '&resourceid=' + resourceID + '&resourceName=' + resourceName +
-          '&redirect=' + encodeURIComponent(redirect) +'&run=true'
-      }, self.template));
-
-      return callback(null);
-    });
-  }, function(err) {
+  // get the space we are viewing
+  space.get(spaceID, function(err, spaceInst) {
     if (err) { return callback(err); }
+
+    // render and append this space's remove button
+    $.root().html(html.render({
+      'removeFromSpace': 'x',
+      'removeFromSpace.href': '/space/remove?spaceID=' + spaceInst.id +
+        '&resourceID=' + resourceID + '&resource=' + resourceName +
+        '&__redirect=' + encodeURIComponent(redirect) +'&__action=post'
+    }, self.template));
 
     return callback(null, $.html());
   });

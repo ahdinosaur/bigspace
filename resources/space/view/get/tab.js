@@ -31,7 +31,9 @@ module['exports'] = function(options, callback) {
       space.view.get.min.present({
         data: {
           id: spaceID
-        }
+        },
+        request: options.request,
+        response: options.response
       }, callback);
     },
 
@@ -39,11 +41,12 @@ module['exports'] = function(options, callback) {
     function (getMin, callback) {
       space.view.remove.min.present({
         data: {
-          id: spaceID,
-          resourceid: creatureID,
-          resourceName: 'creature',
-          redirect: options.request.url
-        }
+          spaceID: spaceID,
+          resourceID: creatureID,
+          resource: 'creature'
+        },
+        request: options.request,
+        response: options.response
       }, function(err, removeMin) {
         if (err) { return callback(err); }
 

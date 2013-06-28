@@ -47,7 +47,8 @@ space.method('start', start, {
 space.property('id', {
   description: 'the name of the space',
   type: 'string',
-  required: true
+  required: true,
+  pattern: /^[a-zA-Z0-9_-]+$/
 });
 
 space.property('resources', {
@@ -184,16 +185,13 @@ space.method('add', add, {
       type: 'object',
       required: 'true',
       properties: {
-        spaceID: {
-          type: 'string',
-          required: true
-        },
+        spaceID: space.schema.properties.id,
         resource: {
           type: 'any',
           required: true
         },
         resourceID: {
-          type: 'string',
+          type: 'any',
           required: true
         }
       }
@@ -297,16 +295,13 @@ space.method('remove', remove, {
       type: 'object',
       required: 'true',
       properties: {
-        spaceID: {
-          type: 'string',
-          required: true
-        },
+        spaceID: space.schema.properties.id,
         resource: {
           type: 'any',
           required: true
         },
         resourceID: {
-          type: 'string',
+          type: 'any',
           required: true
         }
       }
