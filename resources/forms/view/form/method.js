@@ -27,7 +27,9 @@ module['exports'] = function (options, callback) {
       $('.result').html(JSON.stringify(result, true, 2));
       // if we were given a redirect, use it
       if (options.redirect) {
-        options.response.redirect(options.redirect);
+        // fill the redirect template
+        var redirect = require('mustache').to_html(options.redirect, options.data);
+        options.response.redirect(redirect);
       }
       return callback(null, $.html());
     };

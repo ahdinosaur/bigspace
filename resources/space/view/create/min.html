@@ -1,8 +1,8 @@
 <div class='space'>
-  <form action='/space/create' class='form-inline' style="margin: 6px 6px 4px 3px;">
+  <form action='/space/create' method='POST' class='form-inline' style="margin: 6px 6px 4px 3px;">
     <fieldset>
       <input type='text' name='id' size='16' />
-      <input type='hidden' name='run' value='true' />
+      <input type='hidden' name='__redirect' value='/space/get?id={{id}}' />
       <input type='submit' class='btn' value='Join Space' />
     </fieldset>
   </form>

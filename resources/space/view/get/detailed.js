@@ -15,9 +15,10 @@ module['exports'] = function(options, callback) {
       // that creature must be in that space.
       function(callback) {
         var creatureID = options.request.session.creatureID;
-        if (_space.resources.creature.indexOf(creatureID) === -1) {
+        // the creature is not in the space,
+        if (!_space.resources.creature || _space.resources.creature.indexOf(creatureID) === -1) {
 
-          // the creature is not in the space, so add it
+          // add the creature to the space
           space.add({
             'spaceID': _space.id,
             'resource': 'creature',
