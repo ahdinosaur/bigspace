@@ -57,7 +57,6 @@ module['exports'] = function(options, callback) {
 
         // dissect removeMin to get href
         var removeHref = $.load(removeMin)('a').attr('href');
-        console.log("removeHref: ",removeHref);
 
         // append modified removeMin inside tab
         $('a').append(
