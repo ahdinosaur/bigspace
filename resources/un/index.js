@@ -9,7 +9,7 @@ un.schema.description = 'un makes big easy';
 function start(options, callback) {
 
   // create view that should contain index, layout, and method
-  view.create({ path: options.path }, function(err, _view) {
+  view.create({ path: __dirname + '/view' }, function(err, _view) {
     if (err) { return callback(err); }
 
     // change static middleware to be before router
@@ -168,7 +168,9 @@ un.method('start', start, {
     return arr;
   }
 
-un.dependencies = {};
+un.dependencies = {
+  "html-lang": "*"
+};
 
 un.license = "MIT";
 exports.un = un;

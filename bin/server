@@ -35,7 +35,7 @@ async.series([
     resource.use('gist').init({}, callback);
   },
   function(callback) {
-    resource.use('un').start({path: __dirname + '/../view'}, callback);
+    resource.use('un').start({}, callback);
   },
   function(callback) {
     resource.use('admin').start({}, callback);
