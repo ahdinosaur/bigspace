@@ -62,34 +62,6 @@ module['exports'] = function(options, callback) {
       creature.get(creatureID, callback);
     },
 
-    //
-    // top menu
-    //
-    // make index button
-    function(_creature, callback) {
-
-      var tmpl = '<li role="presentation"><a class="resourceIndex" role="menuitem" tabindex="-1" href=""></a></li>';
-
-      // for each resource,
-      // TODO get list of resources intelligently
-      async.each(['space','creature', 'gist'],
-
-        // append to the dropdown a link to that resource's index page
-        function(resourceName, callback) {
-          $('#indexDropItems').append(html.render({
-            'resourceIndex': resourceName,
-            'resourceIndex.href': '/' + resourceName
-          }, tmpl));
-          return callback(null);
-        },
-
-        // return dom
-        function(err) {
-          if (err) { return callback(err); }
-          return callback(null, _creature);
-        });
-    },
-
     // make creature buttons
     function(_creature, callback) {
 

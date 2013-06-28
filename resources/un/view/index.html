@@ -3,7 +3,16 @@
   <div class="row">
     <!-- sidebar-->
     <div class="span2">
-      <ul id="sideNav" class="nav nav-pills nav-stacked">
+      <div class="btn-group dropdown">
+        <a id="indexDrop" href="#" role="button" class="btn btn-large"></a>
+        <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul id="indexDropItems" class="dropdown-menu" role="menu" aria-labelledby="indexDrop">
+        </ul>
+      </div> <!--/index dropdown -->
+      <ul id="methodNav" class="nav nav-pills nav-stacked">
+        <!-- index dropdown -->
       </ul>
     </div> <!-- /sidebar -->
 
