@@ -12,6 +12,12 @@ module['exports'] = function (options, callback) {
      entity  = '',
      _props = r.methods.update.schema.properties.options.properties;
 
+  // TODO
+  // get existing object from id
+  // for any undefined values in data, fill in values from existing object
+  // call method view
+  // if we submitted, redirect to get
+
   $('legend').html(r.methods.update.schema.description);
 
 

@@ -23,6 +23,8 @@ module['exports'] = function (options, callback) {
   if (options.action === 'post') {
     // submit the data
     var cb = function (err, result) {
+      
+      // TODO: move this error checking into 
       if (err) {
         if (err.errors) {
           err.errors.forEach(function(e){
@@ -32,9 +34,17 @@ module['exports'] = function (options, callback) {
           $('.result').append(err.message);
         }
         return showForm(options.data, err.errors);
+      // /end Todo
+
       } else {
         $('form').remove();
         $('.result').html(JSON.stringify(result, true, 2));
+        // if we were given a redirect, use it
+        console.log(options.redirect);
+        if (options.redirect) {
+          console.log("redirecting to ", options.redirect);
+          options.response.redirect(options.redirect);
+        }
         return callback(null, $.html());
       }
     };
