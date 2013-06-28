@@ -13,7 +13,7 @@ module['exports'] = function(options, callback) {
 
     $.root().html(html.render({
       'creatureName': creatureInst.name,
-      'creatureName.href': "/creature/get?id=" + creatureInst.id
+      'creatureName.href': "/creature/get?id=" + creatureInst.id + "&__action=post"
     }, self.template));
 
     return callback(null, $.html());

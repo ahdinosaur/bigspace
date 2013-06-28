@@ -61,7 +61,8 @@ function start(options, callback) {
         data: req.big.params,
         id: req.big.params.id,
         request: req,
-        response: res
+        response: res,
+        action: req.big.params.__action || 'get'
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -78,7 +79,8 @@ function start(options, callback) {
         data: req.big.params,
         id: req.big.params.id,
         request: req,
-        response: res
+        response: res,
+        action: req.big.params.__action || 'post'
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -98,7 +100,8 @@ function start(options, callback) {
         id: req.big.params.id,
         display: req.param('display'),
         request: req,
-        response: res
+        response: res,
+        action: req.big.params.__action || 'get'
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -114,7 +117,8 @@ function start(options, callback) {
         id: req.big.params.id,
         display: req.param('display'),
         request: req,
-        response: res
+        response: res,
+        action: req.big.params.__action || 'post'
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);

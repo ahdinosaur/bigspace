@@ -19,12 +19,8 @@ module['exports'] = function (options, callback) {
   $('#submit').attr('value', options.method);
   $('legend').html(desc);
 
-  // TODO do we want to submit only if all
-  //      necessary data is being submitted?
-  //
-  // if there is any data being submitted
-  if (typeof options.data !== 'undefined' &&
-    Object.keys(options.data).length > 0) {
+  // if the action is to post, submit the form
+  if (options.action === 'post') {
     // submit the data
     var cb = function (err, result) {
       if (err) {
@@ -44,11 +40,11 @@ module['exports'] = function (options, callback) {
     };
     return resource.invoke(method, options.data, cb);
 
-  // otherwise if there is no data being submitted
+  // otherwise if the action is not to post,
   } else {
     // show the form
     $('.results').remove();
-    showForm();
+    showForm(options.data);
   }
 
   function showForm (data, errors) {
