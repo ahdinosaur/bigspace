@@ -21,36 +21,20 @@ module['exports'] = function (options, callback) {
 
   // if the action is to post, submit the form
   if (options.action === 'post') {
-    // submit the data
     var cb = function (err, result) {
-      
-      // TODO: move this error checking into 
-      if (err) {
-        if (err.errors) {
-          err.errors.forEach(function(e){
-            $('.result').append(JSON.stringify(e));
-          });
-        } else {
-          $('.result').append(err.message);
-        }
-        return showForm(options.data, err.errors);
-      // /end Todo
-
-      } else {
-        $('form').remove();
-        $('.result').html(JSON.stringify(result, true, 2));
-        // if we were given a redirect, use it
-        console.log(options.redirect);
-        if (options.redirect) {
-          console.log("redirecting to ", options.redirect);
-          options.response.redirect(options.redirect);
-        }
-        return callback(null, $.html());
+      if (err) { return callback(err); }
+      $('form').remove();
+      $('.result').html(JSON.stringify(result, true, 2));
+      // if we were given a redirect, use it
+      if (options.redirect) {
+        options.response.redirect(options.redirect);
       }
+      return callback(null, $.html());
     };
+    // submit the data
     return resource.invoke(method, options.data, cb);
 
-  // otherwise if the action is not to post,
+  // otherwise if the action is not post,
   } else {
     // show the form
     $('.results').remove();
@@ -82,7 +66,7 @@ module['exports'] = function (options, callback) {
         var input = {};
         for(var p in _props[property]) {
           input[p] = _props[property][p];
-        };
+        }
         input.name = property;
         for(var e in errors) {
           if (errors[e].property === input.name) {

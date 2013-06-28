@@ -10,6 +10,7 @@ module['exports'] = function (options, callback) {
       _view = this;
 
   // TODO add methods to sidebar
+  // r.methods
 
   // either delegate to resource view (if exists)
   // or default to using forms
@@ -31,9 +32,22 @@ module['exports'] = function (options, callback) {
   // now call the delegate we've decided on
   delegate(options, function(err, str) {
 
-    // display errors on layout
-    if (err)
-      $('#messageBar').append('<pre><code><div class="alert alert-error">' + err.stack + '</div></code></pre>');
+    // error handling
+    if (err) {
+      var message = '';
+
+      // first accumulate the error messages
+      if (err.errors) {
+        err.errors.forEach(function(e){
+          message += JSON.stringify(e);
+        });
+      } else {
+        message += err.message;
+      }
+
+      // then display errors on layout
+      $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
+    }
 
     // add result of action to layout
     $('.content').html(str);

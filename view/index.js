@@ -8,9 +8,22 @@ module['exports'] = function(options, callback) {
   // present an informative index of all the spaces
   r.view.index.present(options, function(err, result) {
 
-    // display errors on layout
-    if (err)
+    // error handling
+    if (err) {
+      var message = '';
+
+      // first accumulate the error messages
+      if (err.errors) {
+        err.errors.forEach(function(e){
+          message += JSON.stringify(e);
+        });
+      } else {
+        message += err.message;
+      }
+
+      // then display errors on layout
       $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
+    }
 
     $('#main').html(result);
 
