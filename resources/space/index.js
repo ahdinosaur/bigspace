@@ -70,6 +70,12 @@ function add(options, callback) {
       spaceID = options.spaceID,
       resourceClass = options.resource,
       resourceID = options.resourceID;
+
+  // first check proper arguments are given
+  if (!spaceID || !resourceID || !resourceClass) {
+    return callback(new Error("incomplete arguments given to space.add"));
+  }
+
   // if resource is string, use resource
   if (typeof resourceClass === 'string') {
     resourceClass = resource.use(resourceClass);
@@ -211,6 +217,12 @@ function remove(options, callback) {
       spaceID = options.spaceID,
       resourceClass = options.resource,
       resourceID = options.resourceID;
+
+  // first check proper arguments are given
+  if (!spaceID || !resourceID || !resourceClass) {
+    return callback(new Error("incomplete arguments given to space.remove"));
+  }
+
   // if resource is string, use resource
   if (typeof resourceClass === 'string') {
     resourceClass = resource.use(resourceClass);

@@ -14,9 +14,9 @@ module['exports'] = function(options, callback) {
           encodeURIComponent('/space/get?id=' + spaceID);
 
     options.response.redirect(
-      'space/add?id=' + spaceID +
-      '&resourceid=' + creatureID + '&resourceName=creature' +
-      '&redirect=' + redirect +'&run=true'
+      '/space/add?spaceID=' + spaceID +
+      '&resourceID=' + creatureID + '&resource=creature' +
+      '&__redirect=' + redirect +'&__action=post'
     );
 
   // else just get the create view
