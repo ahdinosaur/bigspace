@@ -79,7 +79,8 @@ function coerceTypes (schema, data) {
 
 forms.dependencies = {
   'html-lang': '*',
-  'mustache': '*'
+  'mustache': '*',
+  'js-object-clone': '*'
 };
 
 exports.forms = forms;

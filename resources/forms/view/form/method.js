@@ -1,4 +1,5 @@
 var resource = require('resource');
+require('js-object-clone');
 
 module['exports'] = function (options, callback) {
 
@@ -48,9 +49,19 @@ module['exports'] = function (options, callback) {
     if(typeof method.schema.properties !== 'undefined') {
       var _props = method.schema.properties || {};
 
+      // if this method has an argument of "options",
+      // use it as properties
       if (method.schema.properties.options &&
         typeof method.schema.properties.options.properties !== 'undefined') {
         _props = method.schema.properties.options.properties;
+      }
+
+      // clone props so we don't modify schema directly
+      _props = Object.clone(_props);
+
+      // remove callback from properties
+      if (_props.callback) {
+        delete _props.callback;
       }
 
       $('h1').html(entity + ' - create');
@@ -90,6 +101,7 @@ module['exports'] = function (options, callback) {
       arr.reverse();
       cont();
 
+    // no properties remain, return the rendered form
     } else {
       callback(null, $.html());
     }
