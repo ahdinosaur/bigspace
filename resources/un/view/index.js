@@ -41,8 +41,8 @@ module['exports'] = function (options, callback) {
     $('#methodNav').append(html.render({
       'methodTab.class': (methodName === rMethod) ? 'active' : undefined,
       'methodLink': methodName,
-       // TODO append id (if any) to href
-      'methodLink.href': "/" + rName + "/" + methodName
+      'methodLink.href': "/" + rName + "/" + methodName +
+        ((options.data.id) ? ("?id=" + options.data.id) : "")
     }, methodTmpl));
   });
 
