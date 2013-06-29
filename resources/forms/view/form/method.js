@@ -7,18 +7,14 @@ module['exports'] = function (options, callback) {
   options = options || {};
   var $ = this.$,
     self = this,
-    output = '',
-    method = resource[options.resource].methods[options.method],
-    desc;
+    r = resource.resources[options.resource],
+    rMethod = resource[options.resource].methods[options.method];
 
-  desc = method.schema.description || '';
+  // legend should show method description or method name
+  $('legend').html(rMethod.schema.description || options.method || '');
 
-  if (desc.length === 0) {
-    desc = options.method;
-  }
-
-  $('#submit').attr('value', options.method);
-  $('legend').html(desc);
+  // submit button should show method name
+  $('#submit').html(options.method);
 
   // if the action is to post, submit the form
   if (options.action === 'post') {
@@ -35,7 +31,7 @@ module['exports'] = function (options, callback) {
       return callback(null, $.html());
     };
     // submit the data
-    return resource.invoke(method, options.data, cb);
+    return resource.invoke(rMethod, options.data, cb);
 
   // otherwise if the action is not post,
   } else {
@@ -46,14 +42,14 @@ module['exports'] = function (options, callback) {
 
   function showForm (data, errors) {
     data = data || {};
-    if(typeof method.schema.properties !== 'undefined') {
-      var props = method.schema.properties || {};
+    if(typeof rMethod.schema.properties !== 'undefined') {
+      var props = rMethod.schema.properties || {};
 
-      // if this method has an argument of "options",
+      // if this rMethod has an argument of "options",
       // use it as properties
-      if (method.schema.properties.options &&
-        typeof method.schema.properties.options.properties !== 'undefined') {
-        props = method.schema.properties.options.properties;
+      if (rMethod.schema.properties.options &&
+        typeof rMethod.schema.properties.options.properties !== 'undefined') {
+        props = rMethod.schema.properties.options.properties;
       }
 
       // clone props so we don't modify schema directly
@@ -63,9 +59,6 @@ module['exports'] = function (options, callback) {
       if (props.callback) {
         delete props.callback;
       }
-
-      // submit button should show method name
-      $('#submit').html(options.method);
 
       // for each property key (in series),
       async.eachSeries(Object.keys(props),
