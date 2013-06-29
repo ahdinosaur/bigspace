@@ -63,7 +63,8 @@ module['exports'] = function (options, callback) {
         delete _props.callback;
       }
 
-      $('#submit').attr('value', options.method);
+      // submit button should show method name
+      $('#submit').html(options.method);
 
       var cont = function(err, result) {
         if (result) {
