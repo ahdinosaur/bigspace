@@ -62,6 +62,9 @@ module['exports'] = function (options, callback) {
     delegate = forms.method;
   }
 
+  //
+  // make our error handling function
+  //
   var handleErrorsAndReturn = function(err) {
     // catch all errors and pipe them back to the layout
     if (err) {
