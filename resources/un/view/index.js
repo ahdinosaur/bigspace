@@ -1,4 +1,3 @@
-
 module['exports'] = function (options, callback) {
 
   var resource = require('resource'),
@@ -12,7 +11,7 @@ module['exports'] = function (options, callback) {
       self = this;
 
   //
-  // top menu
+  // side nav
   //
   // add current resource to index button
   $('#indexDrop').html(rName);
@@ -63,14 +62,12 @@ module['exports'] = function (options, callback) {
     delegate = forms.method;
   }
 
-  // now call the delegate we've decided on
-  delegate(options, function(err, str) {
-
-    // error handling
+  var errorHandler = function(err) {
+    // catch all errors and pipe them back to the layout
     if (err) {
-      var message = '';
 
       // first accumulate the error messages
+      var message = '';
       if (err.errors) {
         err.errors.forEach(function(e){
           message += JSON.stringify(e);
@@ -83,10 +80,33 @@ module['exports'] = function (options, callback) {
       $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
     }
 
-    // add result of action to layout
-    $('.content').html(str);
-
-    // return rendered result with layout
+    // return dom
     return callback(null, $.html());
+  };
+
+  //
+  // now call the delegate we've decided on
+  //
+  // use a domain to catch errors
+  var d = require('domain').create();
+  // safety net for uncaught errors
+  d.on('error', function(err) {
+
+    // handle errors and return
+    return errorHandler(err);
+  });
+  // call delegate
+  d.run(function() {
+    delegate(options, function(err, str) {
+
+      // if we have content,
+      if (str) {
+        // add result of action to layout
+        $('.content').html(str);
+      }
+
+      // also handle any errors and return
+      return errorHandler(err);
+    });
   });
 };
