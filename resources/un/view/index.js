@@ -20,7 +20,7 @@ module['exports'] = function (options, callback) {
   // populate index dropdown
   var indexTmpl = '<li role="presentation"><a class="resourceIndex" role="menuitem" tabindex="-1" href=""></a></li>';
   // TODO get list of resources intelligently
-  var resources = ['space','creature', 'gist'];
+  var resources = ['space','creature', 'gist', 'calendarEvent'];
   // for each resource,
   resources.forEach(function(resourceName) {
     // if this is not the current resource,

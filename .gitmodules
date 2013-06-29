@@ -22,3 +22,6 @@
 [submodule "resources/gist"]
 	path = resources/gist
 	url = git@github.com:erobit/gist
+[submodule "resources/calendarEvent"]
+	path = resources/calendarEvent
+	url = git@github.com:wolfbiter/calendarEvent.git
