@@ -62,7 +62,7 @@ module['exports'] = function (options, callback) {
     delegate = forms.method;
   }
 
-  var errorHandler = function(err) {
+  var handleErrorsAndReturn = function(err) {
     // catch all errors and pipe them back to the layout
     if (err) {
 
@@ -93,7 +93,7 @@ module['exports'] = function (options, callback) {
   d.on('error', function(err) {
 
     // handle errors and return
-    return errorHandler(err);
+    return handleErrorsAndReturn(err);
   });
   // call delegate
   d.run(function() {
@@ -106,7 +106,7 @@ module['exports'] = function (options, callback) {
       }
 
       // also handle any errors and return
-      return errorHandler(err);
+      return handleErrorsAndReturn(err);
     });
   });
 };
