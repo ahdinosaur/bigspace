@@ -25,3 +25,9 @@ npm install
 node bin/server
 browse to http://localhost:8888
 ```
+
+### how to update submodules, if changed since ```git clone```
+
+```
+git submodule update --init
+```
