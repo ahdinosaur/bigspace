@@ -14,7 +14,7 @@ module['exports'] = function (options, callback) {
   $('legend').html(rMethod.schema.description || options.method || '');
 
   // submit button should show method name
-  $('#submit').html(options.method);
+  $('input[type="submit"]').attr('value', options.method);
 
   // if the action is to post, submit the form
   if (options.action === 'post') {

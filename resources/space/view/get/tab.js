@@ -63,7 +63,7 @@ module['exports'] = function(options, callback) {
 
         // append modified removeMin inside tab
         $('a').append(
-          '<button class="btn btn-mini" style="margin-left: 8px; padding: 0 4px;">x</button>');
+          '<button class="btn btn-link" style="margin-left: 8px; padding: 0 4px;">x</button>');
         $('button').attr('id', 'tab-remove' + spaceID);
 
         // add event handlers clicking on get and remove parts of tab
