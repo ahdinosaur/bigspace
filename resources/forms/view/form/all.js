@@ -9,5 +9,5 @@ module['exports'] = function (options, callback) {
   options.data = {};
 
   // call method view
-  self.parent.method.present(options, callback);
+  this.parent.method.present(options, callback);
 };
