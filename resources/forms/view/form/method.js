@@ -8,7 +8,6 @@ module['exports'] = function (options, callback) {
     self = this,
     output = '',
     method = resource[options.resource].methods[options.method],
-    entity = options.resource || 'unknown',
     desc;
 
   desc = method.schema.description || '';
@@ -64,8 +63,7 @@ module['exports'] = function (options, callback) {
         delete _props.callback;
       }
 
-      $('h1').html(entity + ' - create');
-      $('input[type="submit"]').attr('value', options.method);
+      $('#submit').attr('value', options.method);
 
       var cont = function(err, result) {
         if (result) {
