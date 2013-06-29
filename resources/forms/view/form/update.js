@@ -1,6 +1,5 @@
 var resource = require('resource'),
     async = require('async');
-require('js-object-clone');
 
 module['exports'] = function (options, callback) {
 
