@@ -78,6 +78,7 @@ function coerceTypes (schema, data) {
 }
 
 forms.dependencies = {
+  'async': '*',
   'html-lang': '*',
   'mustache': '*',
   'js-object-clone': '*'
