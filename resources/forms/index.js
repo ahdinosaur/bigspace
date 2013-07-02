@@ -38,7 +38,6 @@ function method (options, callback) {
   resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, view) {
     var str = '', form;
     form = view.form[options.method] || view.form['method'];
-    //form = view.form['method'];
     form.present(options, callback);
   });
 }

@@ -19,7 +19,13 @@ module['exports'] = function (options, callback) {
   // if the action is to post, submit the form
   if (options.action === 'post') {
     var cb = function (err, result) {
-      if (err) { return callback(err); }
+
+      // if there are errors, remove results and display errors on the forms
+      if (err) {
+        $('.results').remove();
+        return showForm(options.data, err);
+      }
+
       $('form').remove();
       $('.result').html(JSON.stringify(result, true, 2));
       // if we were given a redirect, use it
@@ -40,8 +46,9 @@ module['exports'] = function (options, callback) {
     showForm(options.data);
   }
 
-  function showForm (data, errors) {
+  function showForm (data, error) {
     data = data || {};
+    var errors = (error) ? error.errors : {};
     if(typeof rMethod.schema.properties !== 'undefined') {
       var props = rMethod.schema.properties || {};
 
@@ -60,41 +67,59 @@ module['exports'] = function (options, callback) {
         delete props.callback;
       }
 
+      //
       // for each property key (in series),
+      // append the property control to the dom
+      //
       async.eachSeries(Object.keys(props),
-        // append the property input to the dom
         function(property, callback) {
-          var input = {};
+
+          // make a shallow clone of this property as the control
+          var control = {};
           for(var p in props[property]) {
-            input[p] = props[property][p];
+            control[p] = props[property][p];
           }
-          input.name = property;
+
+          // label the control
+          control.name = property;
+
+          // if we have errors, add them to the control
           for(var e in errors) {
-            if (errors[e].property === input.name) {
-              input.error = errors[e];
+            if (errors[e].property === control.name) {
+              control.error = errors[e];
             }
           }
-          if(typeof data[input.name] !== 'undefined') {
-            input.value = data[input.name];
-          } else {
-            input.value = input.default || '';
+
+          // if the data we were given has this property, add it to control.
+          if(typeof data[property] !== 'undefined') {
+            control.value = data[property];
           }
-          options.control = input;
+          // else, use control's default (if it has one) or the empty string
+          else {
+            control.value = control.default || '';
+          }
+
+          // add the control to options
+          options.control = control;
+
+          // call inputs presenter, which will handle delegation appropriately
           self.parent.inputs.index.present(options, function(err, result){
             if (err) { return callback(err); }
             $('.inputs').append(result);
             callback(null);
           });
         },
+
+
         function(err) {
           if (err) { return callback(err); }
           // return the dom
-          return callback(null, $.html());
+          return callback(error, $.html());
         });
 
     // no properties remain, return the rendered form
     } else {
-      callback(null, $.html());
+      callback(error, $.html());
     }
   }
 
