@@ -18,7 +18,7 @@ function start(options, callback) {
         // remove existing static
         http.app.remove('static');
         // re-add before router
-        http.app.before('router').use(ware.handle);
+        http.app.before('router').use(ware.handle).as('static');
       }
     });
 
@@ -71,8 +71,6 @@ function start(options, callback) {
     });
 
     http.app.post('/:resource/:method', function (req, res, next) {
-
-      console.log(req.resource.params);
 
       _view.index.present({
         resource: req.param('resource'),
