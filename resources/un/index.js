@@ -169,7 +169,8 @@ un.method('start', start, {
   }
 
 un.dependencies = {
-  "html-lang": "*"
+  "html-lang": "*",
+  "Faker": "*"
 };
 
 un.license = "MIT";

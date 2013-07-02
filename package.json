@@ -16,13 +16,7 @@
     "url": "https://github.com/ahdinosaur/thingmaker/issues"
   },
   "dependencies": {
-    "resource": "*",
-    "resources": "*",
-    "passport": "*",
-    "passport-browserid": "*",
     "async": "*",
-    "html-lang": "*",
-    "Faker": "*",
     "longjohn": "*"
   }
 }
