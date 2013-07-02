@@ -1,13 +1,12 @@
 //
-// string.js - input fields for String types
+// input fields for 'string' types
 //
 module['exports'] = function (options, callback) {
 
-  //
-  // Todo: This load statement should be moved to Viewful
-  //
-  var input = options.control;
-  var $ = this.$.load(this.template);
+  var self = this,
+      $ = self.$,
+      input = options.control;
+
   if(typeof input.error !== 'undefined') {
     $('.control-group').addClass('error');
     $('.help-inline').html(input.error.message);
@@ -15,19 +14,23 @@ module['exports'] = function (options, callback) {
 
   $('.control-label').attr('for', input.name);
   $('.control-label').html(input.name);
-  $('input').attr('id',  input.name);
-  $('input').attr('name', input.name);
-  $('input').attr('value', input.value.toString());
-  $('input').attr('placeholder', input.description || '');
 
-  if(input.format === "password") {
-    $('input').attr('type', "password");
+  // create function of how to add what display view returns
+  var addDisplay = function(err, result) {
+    if (err) { return callback(err); }
+
+    $('.controls').prepend(result);
+    $('input').attr('id',  input.name);
+    $('input').attr('name', input.name);
+    $('input').attr('value', input.value.toString());
+
+    return callback(null, $.html());
+  };
+
+  // delegate to string display views
+  if (input.format) {
+    return self.parent[input.format].present(options, addDisplay);
+  } else {
+    return self.parent.text.present(options, addDisplay);
   }
-
-  if(input.format === "email") {
-    // Bad string concat!
-    $('.add-on').html('<i class="icon-envelope"></i>');
-  }
-
-  return callback(null, $.html());
 };
