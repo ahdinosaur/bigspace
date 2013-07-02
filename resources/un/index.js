@@ -4,7 +4,7 @@ var resource = require('resource'),
     logger = resource.logger,
     un = resource.define('un');
 
-un.schema.description = 'un makes big easy';
+un.schema.description = 'un makes resource easy';
 
 function start(options, callback) {
 
@@ -33,7 +33,7 @@ function start(options, callback) {
       _view.index.present({
         request: req,
         response: res,
-        data: req.big.params
+        data: req.resource.params
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -46,7 +46,7 @@ function start(options, callback) {
         resource: req.param('resource'),
         request: req,
         response: res,
-        data: req.big.params
+        data: req.resource.params
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -58,12 +58,12 @@ function start(options, callback) {
       _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: req.big.params,
-        id: req.big.params.id,
+        data: req.resource.params,
+        id: req.resource.params.id,
         request: req,
         response: res,
-        action: req.big.params.__action || 'get',
-        redirect: req.big.params.__redirect
+        action: req.resource.params.__action || 'get',
+        redirect: req.resource.params.__redirect
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -72,17 +72,17 @@ function start(options, callback) {
 
     http.app.post('/:resource/:method', function (req, res, next) {
 
-      console.log(req.big.params);
+      console.log(req.resource.params);
 
       _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: req.big.params,
-        id: req.big.params.id,
+        data: req.resource.params,
+        id: req.resource.params.id,
         request: req,
         response: res,
-        action: req.big.params.__action || 'post',
-        redirect: req.big.params.__redirect
+        action: req.resource.params.__action || 'post',
+        redirect: req.resource.params.__redirect
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -98,13 +98,13 @@ function start(options, callback) {
       _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: req.big.params,
-        id: req.big.params.id,
+        data: req.resource.params,
+        id: req.resource.params.id,
         display: req.param('display'),
         request: req,
         response: res,
-        action: req.big.params.__action || 'get',
-        redirect: req.big.params.__redirect
+        action: req.resource.params.__action || 'get',
+        redirect: req.resource.params.__redirect
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
@@ -116,13 +116,13 @@ function start(options, callback) {
       _view.index.present({
         resource: req.param('resource'),
         method: req.param('method'),
-        data: req.big.params,
-        id: req.big.params.id,
+        data: req.resource.params,
+        id: req.resource.params.id,
         display: req.param('display'),
         request: req,
         response: res,
-        action: req.big.params.__action || 'post',
-        redirect: req.big.params.__redirect
+        action: req.resource.params.__action || 'post',
+        redirect: req.resource.params.__redirect
       }, function(err, str){
         if (err) { throw err; }
         res.end(str);
