@@ -11,7 +11,7 @@ it acts as an interface to the [big](https://github.com/bigcompany/big) framewor
 ```
 # bigspace requires master branch of 'resources' module
 git clone git@github.com:bigcompany/resources.git -b master
-cd resource
+cd resources
 npm install
 sudo npm link
 cd ../
