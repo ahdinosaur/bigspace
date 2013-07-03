@@ -1,4 +1,5 @@
 var resource = require('resource'),
+    http = resource.use('http'),
     space = resource.use('space'),
     creature = resource.define('creature');
 
@@ -17,6 +18,7 @@ function start(options, callback) {
       view.create({ path: __dirname + '/view' }, function(err, _view) {
           if (err) { return callback(err); }
           creature.view = _view;
+          http.app.use(view.middle({view: _view, prefix: 'creature'}));
           return callback(null);
       });
     },

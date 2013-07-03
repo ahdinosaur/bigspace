@@ -1,6 +1,7 @@
 var resource = require('resource'),
     http = resource.use('http'),
     view = resource.use('view'),
+    forms = resource.use('forms'),
     logger = resource.logger,
     un = resource.define('un');
 
@@ -8,128 +9,84 @@ un.schema.description = 'un makes resource easy';
 
 function start(options, callback) {
 
-  // create view that should contain index, layout, and method
-  view.create({ path: __dirname + '/view' }, function(err, _view) {
-    if (err) { return callback(err); }
+  var express = require('express'),
+      app = express();
 
-    // change static middleware to be before router
-    http.app.stack.forEach(function(ware) {
-      if (ware.handle.label === 'static') {
-        // remove existing static
-        http.app.remove('static');
-        // re-add before router
-        http.app.before('router').use(ware.handle).as('static');
-      }
-    });
-
-    http.app.use(view.middle({ view: _view }));
-
-    //
-    // TODO: cleanup route handlers / make into common methods
-    //
-
-    http.app.get('/', function (req, res, next) {
-
-      _view.index.present({
-        request: req,
-        response: res,
-        data: req.resource.params
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-    });
-
-    http.app.get('/:resource', function (req, res, next) {
-
-      _view.index.present({
-        resource: req.param('resource'),
-        request: req,
-        response: res,
-        data: req.resource.params
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-    });
-
-    http.app.get('/:resource/:method', function (req, res, next) {
-
-      _view.index.present({
-        resource: req.param('resource'),
-        method: req.param('method'),
-        data: req.resource.params,
-        id: req.resource.params.id,
-        request: req,
-        response: res,
-        action: req.resource.params.__action || 'get',
-        redirect: req.resource.params.__redirect
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-    });
-
-    http.app.post('/:resource/:method', function (req, res, next) {
-
-      _view.index.present({
-        resource: req.param('resource'),
-        method: req.param('method'),
-        data: req.resource.params,
-        id: req.resource.params.id,
-        request: req,
-        response: res,
-        action: req.resource.params.__action || 'post',
-        redirect: req.resource.params.__redirect
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-
-    });
-
-    // TODO allow for displays handle nested views
-    // http://stackoverflow.com/questions/14915496/how-can-i-allow-slashes-in-my-express-routes
-    // ex: /space/all/bubble using http://bl.ocks.org/mbostock/4063269
-    http.app.get('/:resource/:method/:display', function (req, res, next) {
-
-      _view.index.present({
-        resource: req.param('resource'),
-        method: req.param('method'),
-        data: req.resource.params,
-        id: req.resource.params.id,
-        display: req.param('display'),
-        request: req,
-        response: res,
-        action: req.resource.params.__action || 'get',
-        redirect: req.resource.params.__redirect
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-    });
-
-    http.app.post('/:resource/:method/:display', function (req, res, next) {
-
-      _view.index.present({
-        resource: req.param('resource'),
-        method: req.param('method'),
-        data: req.resource.params,
-        id: req.resource.params.id,
-        display: req.param('display'),
-        request: req,
-        response: res,
-        action: req.resource.params.__action || 'post',
-        redirect: req.resource.params.__redirect
-      }, function(err, str){
-        if (err) { throw err; }
-        res.end(str);
-      });
-
-    });
-
-    return callback(null, http.server);
+  // change static middleware to be before router
+  app.stack.forEach(function(ware) {
+    if (ware.handle.label === 'static') {
+      // remove existing static
+      app.remove('static');
+      // re-add before router
+      app.before('router').use(ware.handle).as('static');
+    }
   });
+
+  var handle = function(options, next) {
+    options = options || {};
+    options.resource = options.resource || 'space';
+    options.method = options.method || 'all';
+
+    // if the resource is not in use
+    if (!resource.resources[options.resource]) {
+      // pass the request to the next in the middleware stack
+      return next();
+    }
+    // if the resource is in use, call forms.method
+    forms.method(options, function(err, str) {
+      if (err) { throw err; }
+      options.response.end(str);
+    });
+  };
+
+  app.get('/', function (req, res, next) {
+
+    handle({
+      data: req.resource.params,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.get('/:resource', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      data: req.resource.params,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.get('/:resource/:method', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      method: req.param('method'),
+      data: req.resource.params,
+      id: req.resource.params.id,
+      action: req.resource.params.__action || 'get',
+      redirect: req.resource.params.__redirect,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.post('/:resource/:method', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      method: req.param('method'),
+      data: req.resource.params,
+      id: req.resource.params.id,
+      action: req.resource.params.__action || 'post',
+      redirect: req.resource.params.__redirect,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  http.app.before('router').use(app).as('un');
 }
 un.method('start', start, {
   description: "starts un",
@@ -167,8 +124,7 @@ un.method('start', start, {
   }
 
 un.dependencies = {
-  "html-lang": "*",
-  "Faker": "*"
+  express: '*'
 };
 
 un.license = "MIT";

@@ -6,7 +6,10 @@ module['exports'] = function(options, callback) {
       html = require('html-lang'),
       Faker = require('Faker'),
       space = resource.use('space'),
-      creature = resource.use('creature');
+      creature = resource.use('creature'),
+      rName = "space",
+      r = resource.use(rName),
+      rMethod = "get";
 
   var session = options.request.session || {};
   async.waterfall([
@@ -100,24 +103,20 @@ module['exports'] = function(options, callback) {
       }
     }],
     function (err) {
-
-      // error handling
+      //
+      // make our error handling function
+      //
+      // catch all errors and pipe them back to the layout
       if (err) {
-        var message = '';
-
-        // first accumulate the error messages
-        if (err.errors) {
-          err.errors.forEach(function(e){
-            message += JSON.stringify(e);
-          });
-        } else {
-          message += err.message;
-        }
-
         // then display errors on layout
         $('#messageBar').append('<pre class="alert alert-error">' + err.stack + '</pre>');
       }
+      if (options.err) {
+        // then display errors on layout
+        $('#messageBar').append('<pre class="alert alert-error">' + options.err.stack + '</pre>');
+      }
 
+      // return dom
       return callback(null, $.html());
     });
 };

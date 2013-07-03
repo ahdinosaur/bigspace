@@ -26,6 +26,9 @@ async.series([
     resource.use('auth-google-oauth').start({}, callback);
   },
   function(callback) {
+    resource.use('layout').init(callback);
+  },
+  function(callback) {
     resource.use('creature').start({}, callback);
   },
   function(callback) {
@@ -35,11 +38,18 @@ async.series([
     resource.use('gist').init({}, callback);
   },
   function(callback) {
+    resource.use('calendarEvent');
+    callback(null);
+  },
+  function(callback) {
     resource.use('un').start({}, callback);
   },
   function(callback) {
     resource.use('admin').start({}, callback);
   }],
 function(err, results) {
-  if (err) { throw err; }
+  if (err) {
+    console.log(err);
+    throw err;
+  }
 });

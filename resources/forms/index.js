@@ -35,9 +35,8 @@ function method (options, callback) {
   if (options.data) {
     options.data = coerceTypes(resource[options.resource].schema, options.data);
   }
-  resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, view) {
-    var str = '', form;
-    form = view.form[options.method] || view.form['method'];
+  resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, _view) {
+    var form = _view.form[options.method] || _view.form['method'];
     form.present(options, callback);
   });
 }

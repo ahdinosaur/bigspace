@@ -8,7 +8,17 @@ module['exports'] = function (options, callback) {
   var $ = this.$,
     self = this,
     r = resource.resources[options.resource],
-    rMethod = resource[options.resource].methods[options.method];
+    rMethod = r.methods[options.method];
+
+  var domWithLayout = function(error) {
+    options.err = error;
+    self.layout({
+      layout: self.parent.parent.layout,
+      layoutOptions: options,
+      selector: "#forms-main",
+      html: $.html()
+    }, callback);
+  };
 
   // legend should show method description or method name
   $('legend').html(rMethod.schema.description || options.method || '');
@@ -34,7 +44,7 @@ module['exports'] = function (options, callback) {
         var redirect = require('mustache').to_html(options.redirect, options.data);
         options.response.redirect(redirect);
       }
-      return callback(null, $.html());
+      return domWithLayout();
     };
     // submit the data
     return resource.invoke(rMethod, options.data, cb);
@@ -106,20 +116,20 @@ module['exports'] = function (options, callback) {
           self.parent.inputs.index.present(options, function(err, result){
             if (err) { return callback(err); }
             $('.inputs').append(result);
-            callback(null);
+            return callback(null);
           });
         },
 
 
         function(err) {
-          if (err) { return callback(err); }
+          if (err) { return domWithLayout(err); }
           // return the dom
-          return callback(error, $.html());
+          return domWithLayout(error);
         });
 
     // no properties remain, return the rendered form
     } else {
-      callback(error, $.html());
+      return domWithLayout(error);
     }
   }
 

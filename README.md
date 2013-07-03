@@ -9,8 +9,8 @@ it acts as an interface to the [big](https://github.com/bigcompany/big) framewor
 ## how to run
 
 ```
-# bigspace requires master branch of 'resources' module
-git clone git@github.com:bigcompany/resources.git -b master
+# bigspace requires bigspace branch of 'resources' module
+git clone git@github.com:bigcompany/resources.git -b bigspace
 cd resources
 npm install
 sudo npm link
@@ -30,8 +30,6 @@ git clone git@github.com:ahdinosaur/bigspace.git -b master --recursive
 cd bigspace
 # include the 'resource' module we linked
 npm link resource
-# include the 'resources' module we linked
-npm link resources
 npm install
 node bin/server
 browse to http://localhost:8888

@@ -1,5 +1,6 @@
 var resource = require('resource'),
     view = resource.use('view'),
+    http = resource.use('http'),
     logger = resource.logger,
     space = resource.define('space');
 
@@ -14,6 +15,7 @@ function start(options, callback) {
     if (err) { return callback(err); }
 
     space.view = _view;
+    http.app.use(view.middle({view: _view, prefix: 'space'}));
 
     // lazily define spaces property of resources
     // TODO figure out where resources array comes from
