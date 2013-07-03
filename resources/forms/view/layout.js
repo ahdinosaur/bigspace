@@ -3,8 +3,9 @@ module['exports'] = function (options, callback) {
   var resource = require('resource'),
       html = require('html-lang'),
       rName = options.resource = options.resource,
-      rMethod = options.method = options.method,
-      display = options.display = options.display;
+      rMethod = options.method,
+      display = options.display,
+      data = options.data = options.data || {},
       r = resource.use(rName),
       $ = this.$,
       self = this;
