@@ -42,7 +42,7 @@ async.series([
     callback(null);
   },
   function(callback) {
-    resource.use('un').start({}, callback);
+    resource.use('forms').start({}, callback);
   },
   function(callback) {
     resource.use('admin').start({}, callback);

@@ -1,10 +1,92 @@
 var resource = require('resource'),
+    http = resource.use('http'),
+    view = resource.use('view'),
     forms = resource.define('forms');
 
-resource.use('view');
-resource.use('html');
-
 forms.schema.description = "for generating HTML forms";
+
+function start(options, callback) {
+
+  var express = require('express'),
+      app = express();
+
+  var handle = function(options, next) {
+    options = options || {};
+    options.resource = options.resource || 'space';
+    options.method = options.method || 'all';
+
+    // if the resource is not in use
+    if (!resource.resources[options.resource]) {
+      // pass the request to the next in the middleware stack
+      return next();
+    }
+    // if the resource is in use, call forms.method
+    forms.method(options, function(err, str) {
+      if (err) { throw err; }
+      options.response.end(str);
+    });
+  };
+
+  app.get('/', function (req, res, next) {
+
+    handle({
+      data: req.resource.params,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.get('/:resource', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      data: req.resource.params,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.get('/:resource/:method', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      method: req.param('method'),
+      data: req.resource.params,
+      id: req.resource.params.id,
+      action: req.resource.params.__action || 'get',
+      redirect: req.resource.params.__redirect,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  app.post('/:resource/:method', function (req, res, next) {
+
+    handle({
+      resource: req.param('resource'),
+      method: req.param('method'),
+      data: req.resource.params,
+      id: req.resource.params.id,
+      action: req.resource.params.__action || 'post',
+      redirect: req.resource.params.__redirect,
+      request: req,
+      response: res
+    }, next);
+  });
+
+  http.app.before('router').use(app).as('forms');
+}
+forms.method('start', start, {
+  description: "starts forms",
+  properties: {
+    options: {
+      type: 'object'
+    },
+    callback: {
+      type: 'function'
+    }
+  }
+});
 
 forms.method("method", method, {
   "description": "generates a generic view based on a resource method schema",
@@ -35,7 +117,7 @@ function method (options, callback) {
   if (options.data) {
     options.data = coerceTypes(resource[options.resource].schema, options.data);
   }
-  resource.view.create({ path: __dirname + '/view', input: "html"}, function (err, _view) {
+  view.create({ path: __dirname + '/view', input: "html"}, function (err, _view) {
     var form = _view.form[options.method] || _view.form['method'];
     form.present(options, callback);
   });
@@ -79,7 +161,8 @@ forms.dependencies = {
   'async': '*',
   'html-lang': '*',
   'mustache': '*',
-  'js-object-clone': '*'
+  'js-object-clone': '*',
+  'express': '*'
 };
 
 exports.forms = forms;
