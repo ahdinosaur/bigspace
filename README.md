@@ -18,7 +18,7 @@ cd ../
 
 # bigspace requires bigspace branch of 'resource' module
 git clone git@github.com:bigcompany/resource.git -b bigspace
-cd resources
+cd resource
 # include the 'resources' module we linked
 npm link resources
 npm install
