@@ -9,15 +9,15 @@ it acts as an interface to the [big](https://github.com/bigcompany/big) framewor
 ## how to run
 
 ```
-# bigspace requires bigspace branch of 'resources' module
-git clone git@github.com:bigcompany/resources.git -b bigspace
+# bigspace requires bigspace fork of 'resources' module
+git clone git@github.com:ahdinosaur/resources.git -b master
 cd resources
 npm install
 sudo npm link
 cd ../
 
-# bigspace requires bigspace branch of 'resource' module
-git clone git@github.com:bigcompany/resource.git -b bigspace
+# bigspace requires bigspace fork of 'resource' module
+git clone git@github.com:ahdinosaur/resource.git -b master
 cd resource
 # include the 'resources' module we linked
 npm link resources
