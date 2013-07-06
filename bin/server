@@ -35,7 +35,7 @@ async.series([
     resource.use('space').start({}, callback);
   },
   function(callback) {
-    resource.use('gist').init({}, callback);
+    resource.use('gist').start({}, callback);
   },
   function(callback) {
     resource.use('calendarEvent');
